@@ -1,0 +1,154 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## Cursor Rules: OPORD Canvas Editor Project
+
+This document outlines the cursor rules for developing the OPORD Canvas Editor project. It integrates information from the project checklist and summary to provide a comprehensive guide for developers. Developers are expected to use this document in conjunction with the provided checklist (`checklist.md`). As development progresses, developers should check off completed items in the checklist and update file paths to accurately reflect the codebase.
+
+**I. Project Overview**
+
+The OPORD Canvas Editor is a full-stack web application designed to facilitate the creation, editing, and enhancement of military Operation Orders (OPORDs). The application features a dynamic "canvas" interface, advanced tactical task recognition, AI text enhancement, and a doctrine library.
+
+**II. Development Guidelines**
+
+**A. General Principles**
+
+* **Functionality First:** Prioritize the implementation of all core features as defined in the project summary.
+* **Code Quality:** Write clean, modular, readable, and well-commented code. Adhere to linting and formatting standards.
+* **UI/UX Focus:** Ensure the user interface is intuitive, responsive, and adheres to the specified military/cyberpunk aesthetic.
+* **Testing:** Implement thorough unit and integration tests for both backend and frontend.
+* **Documentation:** Provide clear and comprehensive documentation, including an architecture diagram, API documentation, and a detailed `README.md`.
+
+**B. Feature-Specific Rules**
+
+* **Dynamic OPORD Canvas:**
+    * Use a user-friendly interface, potentially a rich text editor.
+    * Implement robust text input and editing functionality.
+    * Ensure proper saving and loading of OPORD content.
+    * **Relevant Checklist Items:** II.C, IV.C, IV.E
+    * **Relevant Summary Items:** 3.a
+    * **Checklist & File Path Updates:** Mark items in sections II.C, IV.C, and IV.E of `checklist.md` as completed and update file paths as you implement this feature.
+
+* **Advanced Tactical Task Recognition & Definition Display:**
+    * **Data Source:** FM 3-90 Tactics (as specified in the summary).
+    * **Preprocessing:**
+        * Extract task names, definitions, page numbers, and image/diagram references.
+        * Store extracted images in the designated assets folder.
+        * Store task data in PostgreSQL with pgvector (including embeddings if semantic search is used).
+    * **Recognition:** Use Gemini for Named Entity Recognition to identify tactical tasks in the OPORD text.
+    * **Display & Tooltips:**
+        * Highlight recognized tasks on the canvas.
+        * Display tooltips on hover with:
+            * Task definition.
+            * FM 3-90 page number.
+            * Extracted image/diagram (if available).
+            * Link to the Doctrine Library (PDF viewer) that navigates to the specific page number.
+    * **Relevant Checklist Items:** II.D, IV.D
+    * **Relevant Summary Items:** 3.b
+    * **Checklist & File Path Updates:** Mark items in sections II.D and IV.D of `checklist.md` as completed and update file paths as you implement this feature, especially for the data preparation script and image storage.
+
+* **State Management (Frontend):**
+    * Use a centralized state management solution (e.g., React Context, Zustand, Redux).
+    * Manage:
+        * OPORD text and structure.
+        * User authentication state.
+        * AI-enhanced text suggestions (including status and accept/reject functionality).
+    * Persist OPORD state for authenticated users via the backend.
+    * **Relevant Checklist Items:** IV.E
+    * **Relevant Summary Items:** 3.c
+    * **Checklist & File Path Updates:** Mark items in section IV.E of `checklist.md` as completed and update file paths for state management files.
+
+* **Database Persistence:**
+    * Store OPORD documents, user accounts (with hashed passwords), and tactical task data in PostgreSQL.
+    * Utilize pgvector for storing task embeddings.
+    * Design the database schema appropriately (users, opords, tactical\_tasks tables).
+    * **Relevant Checklist Items:** III
+    * **Relevant Summary Items:** 3.d
+    * **Checklist & File Path Updates:** Mark items in section III of `checklist.md` as completed and update file paths for database models, migrations, and CRUD functions.
+
+* **User Authentication:**
+    * Implement a secure user login system (OAuth2 with JWT suggested).
+    * Protect routes and API endpoints requiring authentication.
+    * **Relevant Checklist Items:** II.B, IV.B
+    * **Relevant Summary Items:** 3.e
+    * **Checklist & File Path Updates:** Mark items in sections II.B and IV.B of `checklist.md` as completed and update file paths for authentication-related files.
+
+* **AI Text Enhancement:**
+    * Allow users to select text and request AI enhancements.
+    * Use Gemini API for suggested edits.
+    * Present AI suggestions clearly in the UI.
+    * Implement accept/reject functionality for suggestions.
+    * **Relevant Checklist Items:** II.E, IV.F
+    * **Relevant Summary Items:** 3.f
+    * **Checklist & File Path Updates:** Mark items in sections II.E and IV.F of `checklist.md` as completed and update file paths for AI enhancement files.
+
+* **Doctrine Library:**
+    * Provide a dedicated section to view the FM 3-90 PDF.
+    * Use a PDF viewer component (e.g., react-pdf or iframe).
+    * Link tooltips to the Doctrine Library, navigating to the relevant page.
+    * **Relevant Checklist Items:** IV.H
+    * **Relevant Summary Items:** 3.g
+    * **Checklist & File Path Updates:** Mark items in section IV.H of `checklist.md` as completed and update file paths for the Doctrine Library component.
+
+* **Testing:**
+    * **Backend (Pytest):**
+        * Unit tests for utilities, models, CRUD operations, and service logic.
+        * Integration tests for API endpoints.
+        * Tests for NER logic and pgvector interaction.
+        * Tests for PDF parsing script (accuracy of extraction).
+    * **Frontend (Jest, React Testing Library):**
+        * Unit tests for components, utilities, and state management.
+        * Integration tests for user flows (login, OPORD editing, task highlighting, AI enhancement, Doctrine Library).
+        * Tests for PDF viewer functionality.
+    * **Relevant Checklist Items:** VI
+    * **Relevant Summary Items:** 3.h
+    * **Checklist & File Path Updates:** Mark items in section VI of `checklist.md` as completed and update file paths for test files.
+
+* **Documentation:**
+    * Architecture diagram (data flow for PDF processing, NER, AI enhancement).
+    * API endpoint documentation.
+    * Detailed `README.md` (setup, configuration, running instructions).
+    * List of tradeoffs made during development.
+    * **Relevant Checklist Items:** VII
+    * **Relevant Summary Items:** 4
+    * **Checklist & File Path Updates:** Mark items in section VII of `checklist.md` as completed and update file paths for documentation files.
+
+**C. Technology Stack**
+
+* **Backend:** Python, FastAPI, Pydantic
+* **Frontend:** React, Tailwind CSS
+* **Database:** PostgreSQL, pgvector
+* **AI Engine:** Gemini
+* **Containerization:** Docker
+* **Relevant Summary Items:** 2
+
+**D. UI/UX Guidelines**
+
+* Adhere to the specified sleek, modern, military/cyberpunk aesthetic.
+* Ensure responsive design for different screen sizes.
+* Implement intuitive navigation and user flow.
+* Provide clear visual feedback for user interactions.
+* **Relevant Summary Items:** 3.a, 3.i
+
+**E. Out of Scope**
+
+* Advanced AI optimization beyond Gemini for NER and text enhancement.
+* Production-level scalability design.
+* Advanced DevOps beyond Docker.
+* Excessive frontend animation or custom styling beyond the defined theme.
+* **Relevant Summary Items:** 5
+
+**III. Assessment Criteria**
+
+The project will be assessed based on the following criteria (from the summary):
+
+* **Functionality:** All specified core features are implemented and work correctly.
+* **Code Quality & Architecture:** Clean, modular, readable, well-commented code; sound architectural decisions for PDF processing, pgvector, Gemini NER, and AI enhancement integration.
+* **User Interface & Experience:** UI is clean, intuitive, responsive, and successfully implements the target aesthetic. Tactical task and AI interactions are seamless. PDF reference is accessible and useful.
+* **Technical Implementation:** Solid understanding and correct implementation of chosen technologies.
+* **AI Integration:** Effective use of Gemini for NER and text enhancement; good UX for AI-suggested edits.
+* **Testing:** Thoroughness and quality of unit and integration tests.
+* **Development Thought Process:** Clear rationale for technical choices, prioritization, and problem-solving.
+* **Relevant Summary Items:** 6
