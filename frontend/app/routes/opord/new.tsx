@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate, redirect } from 'react-router';
 import type { Route } from './+types/new';
 import { useAuth } from '../../lib/auth';
-import { opordApi } from '../../lib/api';
+import { useOpord } from '../../lib/opord-context';
 import { Navbar, MainLayout, Logo, Button, Card, CardHeader, CardTitle, CardContent, CardFooter, Input } from '../../lib/components';
+import { OpordCanvas } from '../../lib/components/OpordCanvas';
 
 export function meta() {
   return [
@@ -13,9 +14,12 @@ export function meta() {
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
-  const token = localStorage.getItem('auth_token');
-  if (!token) {
-    return redirect('/login');
+  // Check if we're in a browser environment before accessing localStorage
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return redirect('/login');
+    }
   }
   return null;
 }
@@ -23,10 +27,14 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function NewOPORD() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { createOpord, isLoading, error: opordError } = useOpord();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleContentChange = (newContent: string) => {
+    setContent(newContent);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,16 +44,11 @@ export default function NewOPORD() {
       return;
     }
     
-    setIsSubmitting(true);
-    setError(null);
-    
     try {
-      await opordApi.create({ title, content });
+      await createOpord(title, content);
       navigate('/dashboard');
     } catch (err) {
-      console.error('Error creating OPORD:', err);
       setError('Failed to create OPORD. Please try again.');
-      setIsSubmitting(false);
     }
   };
 
@@ -82,9 +85,9 @@ export default function NewOPORD() {
             
             <form onSubmit={handleSubmit}>
               <CardContent className="space-y-4">
-                {error && (
+                {(error || opordError) && (
                   <div className="p-2 border border-red-500/20 bg-red-500/10 text-red-400 rounded-sm text-xs font-mono">
-                    {error}
+                    {error || opordError}
                   </div>
                 )}
                 
@@ -97,7 +100,7 @@ export default function NewOPORD() {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Enter mission title"
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                   />
                 </div>
                 
@@ -105,13 +108,9 @@ export default function NewOPORD() {
                   <label className="block text-xs font-mono text-zinc-400 mb-1" htmlFor="content">
                     CONTENT
                   </label>
-                  <textarea
-                    id="content"
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="Enter mission details..."
-                    className="flex w-full rounded-sm border border-zinc-700 bg-zinc-800 px-3 py-2 h-64 text-sm font-mono text-white shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500 resize-none"
-                    disabled={isSubmitting}
+                  <OpordCanvas
+                    initialContent={content}
+                    onSave={handleContentChange}
                   />
                 </div>
               </CardContent>
@@ -119,9 +118,9 @@ export default function NewOPORD() {
               <CardFooter className="flex justify-end">
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                 >
-                  {isSubmitting ? "CREATING..." : "CREATE OPORD"}
+                  {isLoading ? "CREATING..." : "CREATE OPORD"}
                 </Button>
               </CardFooter>
             </form>

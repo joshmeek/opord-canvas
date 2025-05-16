@@ -3,6 +3,26 @@ import type { ReactNode } from "react";
 import { jwtDecode } from "jwt-decode";
 import { authApi } from "./api";
 
+// Safe localStorage helper functions
+const getLocalStorageItem = (key: string): string | null => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    return localStorage.getItem(key);
+  }
+  return null;
+};
+
+const setLocalStorageItem = (key: string, value: string): void => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    localStorage.setItem(key, value);
+  }
+};
+
+const removeLocalStorageItem = (key: string): void => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    localStorage.removeItem(key);
+  }
+};
+
 interface User {
   id: string;
   email: string;
@@ -26,7 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   
   // Check for stored token on mount
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getLocalStorageItem('token');
     if (token) {
       try {
         const decoded = jwtDecode<{sub: string; email: string}>(token);
@@ -36,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       } catch (error) {
         // Invalid token
-        localStorage.removeItem("token");
+        removeLocalStorageItem('token');
       }
     }
   }, []);
@@ -49,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await authApi.login(email, password);
       const { access_token } = data;
       
-      localStorage.setItem('token', access_token);
+      setLocalStorageItem('token', access_token);
       
       // For JWT format like xxx.yyy.zzz
       try {
@@ -73,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
   
   const logout = () => {
-    localStorage.removeItem("token");
+    removeLocalStorageItem('token');
     setUser(null);
   };
   

@@ -6,7 +6,7 @@
 -   [x] Set up Python backend environment (e.g., simple venv, pip) - `N/A`
 -   [x] Set up React frontend environment (e.g., Create React App, Vite) - `N/A`
 -   [x] Define project structure (backend, frontend, docker, docs, scripts, public/assets for PDF & images) - `N/A`
--   [ ] Configure linters and formatters (e.g., Black, Flake8, Prettier, ESLint) - `N/A`
+-   [x] Configure linters and formatters (e.g., Black, Flake8, Prettier, ESLint) - `N/A`
 
 ## II. Backend Development (Python, FastAPI, Pydantic)
 
@@ -75,56 +75,56 @@
 ## IV. Frontend Development (React, Tailwind CSS)
 
 ### A. Core UI Setup
--   [ ] Initialize React application with Tailwind CSS - `src/index.css`, `tailwind.config.js`
--   [ ] Set up routing (e.g., React Router) - `src/App.js`
--   [ ] Create basic layout components (Navbar, Footer, Main Content Area) - `src/components/layout/`
--   [ ] **Styling:** Implement a sleek, modern design with a military/cyberpunk aesthetic using Tailwind CSS. - `All Components`
+-   [x] Initialize React application with Tailwind CSS - `src/index.css`, `tailwind.config.js`
+-   [x] Set up routing (e.g., React Router) - `src/App.js`
+-   [x] Create basic layout components (Navbar, Footer, Main Content Area) - `src/components/layout/`
+-   [x] **Styling:** Implement a sleek, modern design with a military/cyberpunk aesthetic using Tailwind CSS. - `All Components`
 -   [ ] Place FM 3-90 PDF in `public` folder for direct access. - `public/FM_3-90.pdf`
 
 ### B. User Authentication UI
--   [ ] Create Login page/component - `src/pages/LoginPage.js`
--   [ ] Create Registration page/component - `src/pages/RegisterPage.js`
--   [ ] Implement forms for login and registration - `src/components/auth/LoginForm.js`, `src/components/auth/RegisterForm.js`
--   [ ] Implement API calls to backend auth endpoints - `src/services/authService.js`
--   [ ] Implement logic to store/clear auth token (e.g., localStorage, Context) - `src/context/AuthContext.js`
--   [ ] Implement protected routes for authenticated users - `src/components/auth/ProtectedRoute.js`
+-   [x] Create Login page/component - `src/pages/LoginPage.js`
+-   [x] Create Registration page/component - `src/pages/RegisterPage.js`
+-   [x] Implement forms for login and registration - `src/components/auth/LoginForm.js`, `src/components/auth/RegisterForm.js`
+-   [x] Implement API calls to backend auth endpoints - `src/services/authService.js`
+-   [x] Implement logic to store/clear auth token (e.g., localStorage, Context) - `src/context/AuthContext.js`
+-   [x] Implement protected routes for authenticated users - `src/components/auth/ProtectedRoute.js`
 
 ### C. OPORD Canvas Interface
--   [ ] Design the "canvas" component (e.g., a rich text editor like Tiptap/Plate.js, or a carefully styled `textarea` with overlay capabilities for highlighting) - `src/components/opord/OpordCanvas.js`
--   [ ] Implement text input and editing functionality - `src/components/opord/OpordCanvas.js`
--   [ ] Implement saving OPORD content (manual or auto-save) - `src/components/opord/OpordCanvas.js`, `src/services/opordService.js`
--   [ ] Implement loading existing OPORD content - `src/components/opord/OpordCanvas.js`, `src/services/opordService.js`
--   [ ] Create OPORD list/dashboard page - `src/pages/DashboardPage.js`
+-   [x] Design the "canvas" component (e.g., a rich text editor like Tiptap/Plate.js, or a carefully styled `textarea` with overlay capabilities for highlighting) - `src/components/opord/OpordCanvas.js`
+-   [x] Implement text input and editing functionality - `src/components/opord/OpordCanvas.js`
+-   [x] Implement saving OPORD content (manual or auto-save) - `src/components/opord/OpordCanvas.js`, `src/services/opordService.js`
+-   [x] Implement loading existing OPORD content - `src/components/opord/OpordCanvas.js`, `src/services/opordService.js`
+-   [x] Create OPORD list/dashboard page - `src/pages/DashboardPage.js`
 
 ### D. Tactical Task Recognition UI
--   [ ] Implement logic to send OPORD text to backend for analysis as user types or on demand - `src/components/opord/OpordCanvas.js`
--   [ ] Display highlighted tactical tasks within the canvas (e.g., using decorations in rich text editor or overlay elements over a textarea) - `src/components/opord/OpordCanvas.js`
--   [ ] Implement hover tooltips for highlighted tasks showing definitions, **page numbers from FM 3-90, and associated extracted images/diagrams** (fetched via API). - `src/components/opord/TacticalTaskTooltip.js`
--   [ ] Ensure UI is polished and integrates seamlessly with the canvas.
+-   [x] Implement logic to send OPORD text to backend for analysis as user types or on demand - `src/components/opord/OpordCanvas.js`
+-   [x] Display highlighted tactical tasks within the canvas (e.g., using decorations in rich text editor or overlay elements over a textarea) - `src/components/opord/OpordCanvas.js`
+-   [x] Implement hover tooltips for highlighted tasks showing definitions, **page numbers from FM 3-90, and associated extracted images/diagrams** (fetched via API). - `src/components/opord/TacticalTaskTooltip.js`
+-   [x] Ensure UI is polished and integrates seamlessly with the canvas.
 
 ### E. State Management (e.g., React Context, Zustand, Redux)
--   [ ] Set up chosen state management solution - `src/context/` or `src/store/`
--   [ ] Manage OPORD text state - `src/context/OpordContext.js` or similar
--   [ ] Manage user authentication state (already covered by AuthContext) - `src/context/AuthContext.js`
--   [ ] Manage AI suggestions state (text, status: pending/accepted/rejected) - `src/context/AiContext.js` or similar
--   [ ] Ensure state persistence for OPORDs (via backend).
+-   [x] Set up chosen state management solution - `src/context/` or `src/store/`
+-   [x] Manage OPORD text state - `src/context/OpordContext.js` or similar
+-   [x] Manage user authentication state (already covered by AuthContext) - `src/context/AuthContext.js`
+-   [x] Manage AI suggestions state (text, status: pending/accepted/rejected) - `src/context/AiContext.js` or similar
+-   [x] Ensure state persistence for OPORDs (via backend).
 
 ### F. AI Text Enhancement UI (Gemini)
--   [ ] Implement UI for text selection within the canvas - `src/components/opord/OpordCanvas.js`
--   [ ] Implement button/action to trigger AI enhancement for selected text - `src/components/opord/OpordCanvas.js`
--   [ ] Display AI suggestions (from Gemini) to the user (e.g., inline diff, modal) - `src/components/ai/SuggestionDisplay.js`
--   [ ] Implement accept/reject functionality for AI suggestions, updating the canvas content accordingly - `src/components/ai/SuggestionDisplay.js`
+-   [x] Implement UI for text selection within the canvas - `src/components/opord/OpordCanvas.js`
+-   [x] Implement button/action to trigger AI enhancement for selected text - `src/components/opord/OpordCanvas.js`
+-   [x] Display AI suggestions (from Gemini) to the user (e.g., inline diff, modal) - `src/components/ai/SuggestionDisplay.js`
+-   [x] Implement accept/reject functionality for AI suggestions, updating the canvas content accordingly - `src/components/ai/SuggestionDisplay.js`
 
 ### G. General UI/UX
--   [ ] Ensure responsive design for different screen sizes. - `All Components`
--   [ ] Implement intuitive navigation and user flow. - `All Components`
--   [ ] Focus on a clean, polished, and highly usable interface following the specified aesthetic. - `All Components`
+-   [x] Ensure responsive design for different screen sizes. - `All Components`
+-   [x] Implement intuitive navigation and user flow. - `All Components`
+-   [x] Focus on a clean, polished, and highly usable interface following the specified aesthetic. - `All Components`
 
 ### H. Doctrine Library / PDF Viewer
--   [ ] Create a new route and page for the Doctrine Library - `src/pages/DoctrineLibraryPage.js`
--   [ ] Implement a PDF viewer component on this page (e.g., using `react-pdf` or embedding an iframe to the PDF in the `public` folder). - `src/components/doctrine/PdfViewer.js`
--   [ ] Provide a way for users to navigate to this library (e.g., link in Navbar).
--   [ ] In tooltips (IV.D), provide a link/button that opens the Doctrine Library and ideally navigates the PDF viewer to the specific `page_number` associated with the tactical task.
+-   [x] Create a new route and page for the Doctrine Library - `src/pages/DoctrineLibraryPage.js`
+-   [x] Implement a PDF viewer component on this page (e.g., using `react-pdf` or embedding an iframe to the PDF in the `public` folder). - `src/components/doctrine/PdfViewer.js`
+-   [x] Provide a way for users to navigate to this library (e.g., link in Navbar).
+-   [x] In tooltips (IV.D), provide a link/button that opens the Doctrine Library and ideally navigates the PDF viewer to the specific `page_number` associated with the tactical task.
 
 ## V. Dockerization
 

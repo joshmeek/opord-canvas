@@ -1,4 +1,13 @@
 // API service for OPORD operations
+
+// Safe localStorage helper (same pattern as in auth.tsx)
+const getLocalStorageItem = (key: string): string | null => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    return localStorage.getItem(key);
+  }
+  return null;
+};
+
 interface OPORDCreate {
   title: string;
   content: string;
@@ -35,6 +44,7 @@ export interface AnalysisResult {
   definition: string;
   page_number: string;
   image_path?: string;
+  id?: number; // ID of the tactical task
 }
 
 export interface TacticalTask {
@@ -59,7 +69,7 @@ interface AIEnhancementResponse {
 
 // Base fetch function with authentication
 const apiFetch = async (url: string, options: RequestInit = {}) => {
-  const token = localStorage.getItem('token');
+  const token = getLocalStorageItem('token');
   
   const headers = {
     ...(options.headers || {}),
