@@ -118,11 +118,22 @@ export default function OPORDDetail({ loaderData }: Route.ComponentProps) {
       
       <MainLayout>
         <div className="w-full mx-auto">
-          <h1 className="text-2xl font-bold font-mono tracking-tight text-white mb-2">
-            {currentOpord.title || "Untitled OPORD"}
-          </h1>
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-2xl font-bold font-mono tracking-tight text-white">
+              {currentOpord.title || "Untitled OPORD"}
+            </h1>
+            
+            <Button
+              variant={isEditing ? "primary" : "outline"}
+              size="sm"
+              onClick={handleEditToggle}
+              className={isEditing ? "bg-emerald-700 hover:bg-emerald-600" : ""}
+            >
+              {isEditing ? "SAVE CHANGES" : "EDIT OPORD"}
+            </Button>
+          </div>
           
-          <div className="text-xs text-zinc-500 mb-6">
+          <div className="text-xs text-zinc-500 mb-4">
             Created: {new Date(currentOpord.created_at).toLocaleString()}
             {currentOpord.updated_at && ` • Updated: ${new Date(currentOpord.updated_at).toLocaleString()}`}
           </div>
@@ -133,26 +144,18 @@ export default function OPORDDetail({ loaderData }: Route.ComponentProps) {
             </div>
           )}
           
-          <Card className="w-full">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>MISSION CONTENT</CardTitle>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleEditToggle}
-              >
-                {isEditing ? "SAVE CHANGES" : "EDIT"}
-              </Button>
-            </CardHeader>
-            <CardContent>
-              <OpordCanvas
-                initialContent={isEditing ? editedContent : currentOpord.content}
-                onSave={handleContentChange}
-                readOnly={!isEditing}
-                className="min-h-[80vh]"
-              />
-            </CardContent>
-          </Card>
+          {isEditing && (
+            <div className="mb-4 p-3 border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 rounded-sm font-mono text-sm">
+              Select text in the editor to enhance it with AI. The AI enhancement panel will appear on the right.
+            </div>
+          )}
+          
+          <OpordCanvas
+            initialContent={editedContent}
+            onSave={handleContentChange}
+            readOnly={!isEditing}
+            className="min-h-[80vh]"
+          />
         </div>
       </MainLayout>
     </>

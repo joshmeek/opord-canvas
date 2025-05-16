@@ -44,6 +44,8 @@ export function OpordCanvas({
   const [debouncedContent, setDebouncedContent] = useState(initialContent);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [highlightedText, setHighlightedText] = useState<JSX.Element | null>(null);
+  const [showAIPane, setShowAIPane] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
   const { analyzeOpord, analysisResults } = useOpord();
   const { 
     suggestion, 
@@ -116,6 +118,7 @@ export function OpordCanvas({
         // Calculate selection position in text
         const fullText = content;
         const selectedText = selection.toString();
+        setSelectedText(selectedText);
         
         // Find indexes of this selection in the content
         // This is a simplified approach - we're assuming the selected text is unique in the content
@@ -123,12 +126,20 @@ export function OpordCanvas({
         if (start >= 0) {
           const end = start + selectedText.length;
           setSelection({ start, end });
+          // Open AI pane when text is selected in edit mode
+          if (!readOnly && selectedText.trim().length > 0) {
+            setShowAIPane(true);
+          }
           return;
         }
       }
     }
     
-    setSelection(null);
+    // Don't clear selection if AI pane is shown with suggestion
+    if (!suggestion) {
+      setSelection(null);
+      setSelectedText('');
+    }
   };
   
   // Convert API format analysis results to our internal format
@@ -316,9 +327,8 @@ export function OpordCanvas({
   
   // Request AI enhancement for selected text
   const handleAIEnhancement = async (enhancementType: 'general' | 'conciseness' | 'clarity' | 'impact' = 'general') => {
-    if (!selection) return;
+    if (!selection || !selectedText) return;
     
-    const selectedText = content.substring(selection.start, selection.end);
     await getTextEnhancement(selectedText, enhancementType);
   };
   
@@ -326,9 +336,10 @@ export function OpordCanvas({
   const handleAcceptSuggestion = () => {
     if (!suggestion || !selection) return;
     
+    // Get the enhanced text from AI
     const enhancedText = acceptSuggestion();
     
-    // Replace the selected text with the enhanced text
+    // Update the content with the enhanced text
     const newContent = 
       content.substring(0, selection.start) + 
       enhancedText + 
@@ -336,20 +347,21 @@ export function OpordCanvas({
     
     setContent(newContent);
     
-    // Reset selection and clear suggestion
-    setSelection(null);
-    clearSuggestion();
-    
-    // If there's a save callback, call it
     if (onSave) {
       onSave(newContent);
     }
+    
+    // Clear suggestion and selection
+    clearSuggestion();
+    setSelection(null);
+    setSelectedText('');
+    setShowAIPane(false);
   };
   
   // Reject AI enhancement
   const handleRejectSuggestion = () => {
     rejectSuggestion();
-    setSelection(null);
+    clearSuggestion();
   };
   
   // Handle "real" textarea input changes (when editing)
@@ -362,6 +374,13 @@ export function OpordCanvas({
     }
   };
   
+  // Listen to mouseup for text selection
+  useEffect(() => {
+    const handleMouseUp = () => handleSelectionChange();
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => document.removeEventListener('mouseup', handleMouseUp);
+  }, [content, readOnly]);
+  
   // Hidden textarea used only for editing
   const renderHiddenTextarea = () => {
     if (readOnly) return null;
@@ -371,160 +390,160 @@ export function OpordCanvas({
         ref={textareaRef}
         value={content}
         onChange={handleContentChange}
-        className="w-full h-full opacity-0 absolute inset-0 z-10"
-        style={{ caretColor: 'transparent' }}
+        className="absolute top-0 left-0 opacity-0 pointer-events-none h-0"
       />
     );
   };
   
-  return (
-    <div 
-      className={cn(
-        "flex flex-col h-full",
-        className
-      )}
-    >
-      {/* Document editor with fixed toolbar */}
-      <div className="flex flex-col h-full bg-zinc-950 border border-zinc-800 rounded-sm shadow-xl overflow-hidden">
-        {/* Document toolbar */}
-        <div className="flex items-center justify-between px-4 py-2 bg-zinc-900 border-b border-zinc-800">
-          <div className="flex items-center gap-2">
-            <div className="h-3 w-3 bg-red-500 rounded-full"></div>
-            <div className="h-3 w-3 bg-yellow-500 rounded-full"></div>
-            <div className="h-3 w-3 bg-green-500 rounded-full"></div>
-          </div>
-          <div className="text-xs font-mono text-zinc-400">
-            OPORD CANVAS - {isAnalyzing ? "ANALYZING..." : "READY"}
-          </div>
-          <div>
-            {!readOnly && !suggestion && !selection && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={runAnalysis}
-                disabled={isAnalyzing || !content.trim()}
-              >
-                {isAnalyzing ? "Analyzing..." : "Analyze Tactical Tasks"}
-              </Button>
-            )}
-          </div>
+  const handleCloseAIPane = () => {
+    clearSuggestion();
+    setShowAIPane(false);
+  };
+  
+  // Render the AI enhancement pane
+  const renderAIPane = () => {
+    if (!showAIPane || readOnly) return null;
+    
+    return (
+      <div className="border-l border-zinc-800 bg-zinc-900 w-1/3 p-4 overflow-y-auto">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-emerald-500 font-bold">AI Enhancement</h3>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleCloseAIPane}
+          >
+            Close
+          </Button>
         </div>
         
-        {/* Document content area - main view */}
+        {selectedText && !suggestion && (
+          <>
+            <div className="border border-zinc-800 rounded p-3 mb-4">
+              <h4 className="text-xs text-zinc-500 mb-1">Selected Text:</h4>
+              <p className="text-white text-sm">{selectedText}</p>
+            </div>
+            
+            <div className="mb-4">
+              <h4 className="text-xs text-zinc-500 mb-2">Enhance text for:</h4>
+              <div className="flex flex-wrap gap-2">
+                <Button 
+                  onClick={() => handleAIEnhancement('general')}
+                  variant="outline"
+                  size="sm"
+                  disabled={isAILoading}
+                >
+                  {isAILoading ? 'Processing...' : 'General'}
+                </Button>
+                <Button 
+                  onClick={() => handleAIEnhancement('clarity')}
+                  variant="outline"
+                  size="sm"
+                  disabled={isAILoading}
+                >
+                  Clarity
+                </Button>
+                <Button 
+                  onClick={() => handleAIEnhancement('conciseness')}
+                  variant="outline"
+                  size="sm"
+                  disabled={isAILoading}
+                >
+                  Conciseness
+                </Button>
+                <Button 
+                  onClick={() => handleAIEnhancement('impact')}
+                  variant="outline"
+                  size="sm"
+                  disabled={isAILoading}
+                >
+                  Impact
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
+        
+        {suggestion && (
+          <div className="mt-4">
+            <div className="border border-zinc-800 rounded p-3 mb-4">
+              <h4 className="text-xs text-zinc-500 mb-1">Enhanced Text:</h4>
+              <p className="text-white text-sm">{suggestion.enhancedText}</p>
+            </div>
+            
+            <div className="flex gap-2">
+              <Button 
+                onClick={handleAcceptSuggestion}
+                variant="primary"
+                size="sm"
+                className="bg-emerald-700 hover:bg-emerald-600"
+              >
+                Apply
+              </Button>
+              <Button 
+                onClick={handleRejectSuggestion}
+                variant="outline"
+                size="sm"
+              >
+                Reject
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+  
+  return (
+    <div className={cn("relative border border-zinc-800 bg-zinc-950 rounded-md", className)}>
+      {activeTooltip && (
         <div 
-          ref={editorRef} 
-          className="relative flex-1 w-full overflow-auto p-8 px-16"
-          onMouseUp={handleSelectionChange}
-          onClick={() => setActiveTooltip(null)}
+          style={{ 
+            position: 'absolute',
+            top: tooltipPosition.top, 
+            left: tooltipPosition.left,
+            zIndex: 50 
+          }}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.01)_0%,transparent_70%)]"></div>
-          
-          {/* The hidden textarea for actual editing */}
+          <TacticalTaskTooltip
+            task={activeTooltip}
+            onClose={() => setActiveTooltip(null)}
+          />
+        </div>
+      )}
+      
+      <div 
+        ref={editorRef}
+        className={cn(
+          "flex h-full", 
+          readOnly ? "cursor-default" : "cursor-text"
+        )}
+      >
+        {/* Main content area */}
+        <div 
+          ref={contentRef}
+          className={cn(
+            "p-4 font-mono text-sm text-white leading-relaxed whitespace-pre-wrap flex-1 min-h-[300px]",
+            readOnly ? "" : "focus:outline-none"
+          )}
+          tabIndex={0}
+        >
           {renderHiddenTextarea()}
           
-          {/* The visible content with highlights */}
-          <div 
-            ref={contentRef}
-            className="relative text-white font-mono text-base leading-relaxed whitespace-pre-wrap"
-          >
-            {highlightedText || content}
-          </div>
+          {/* Display content with or without highlights */}
+          {highlightedText || content}
           
-          {/* Tactical Task Tooltip */}
-          {activeTooltip && (
-            <div 
-              style={{ 
-                position: 'absolute', 
-                top: tooltipPosition.top, 
-                left: tooltipPosition.left,
-                zIndex: 50,
-              }}
-            >
-              <TacticalTaskTooltip 
-                task={activeTooltip} 
-                onClose={() => setActiveTooltip(null)} 
-              />
+          {/* Loading indicator */}
+          {isAnalyzing && (
+            <div className="fixed bottom-4 right-4 bg-emerald-900/50 text-emerald-400 font-mono text-xs px-3 py-1 rounded-md animate-pulse">
+              Analyzing...
             </div>
           )}
         </div>
+        
+        {/* AI Enhancement Pane */}
+        {renderAIPane()}
       </div>
-      
-      {/* Selection tools */}
-      {selection && !readOnly && (
-        <div className="mt-4 p-4 border border-zinc-700 bg-zinc-800/80 backdrop-blur-sm rounded-sm">
-          <h4 className="text-xs font-mono text-zinc-400 mb-3">ENHANCE SELECTED TEXT</h4>
-          <div className="flex flex-wrap gap-3">
-            <Button 
-              size="sm" 
-              onClick={() => handleAIEnhancement('general')}
-              disabled={isAILoading}
-            >
-              General Enhancement
-            </Button>
-            <Button 
-              size="sm" 
-              variant="secondary" 
-              onClick={() => handleAIEnhancement('conciseness')}
-              disabled={isAILoading}
-            >
-              Make Concise
-            </Button>
-            <Button 
-              size="sm" 
-              variant="secondary" 
-              onClick={() => handleAIEnhancement('clarity')}
-              disabled={isAILoading}
-            >
-              Improve Clarity
-            </Button>
-            <Button 
-              size="sm" 
-              variant="secondary" 
-              onClick={() => handleAIEnhancement('impact')}
-              disabled={isAILoading}
-            >
-              Add Impact
-            </Button>
-          </div>
-        </div>
-      )}
-      
-      {/* AI Suggestion display */}
-      {suggestion && (
-        <div className="mt-4 p-6 border border-zinc-700 bg-zinc-800/80 backdrop-blur-sm rounded-sm">
-          <h4 className="text-sm font-mono text-emerald-500 mb-3">AI ENHANCEMENT SUGGESTION</h4>
-          
-          <div className="mb-4">
-            <div className="text-xs text-zinc-500 mb-1">ORIGINAL TEXT:</div>
-            <div className="p-3 bg-zinc-900/80 text-zinc-400 font-mono text-sm rounded-sm border border-zinc-800">
-              {suggestion.originalText}
-            </div>
-          </div>
-          
-          <div className="mb-4">
-            <div className="text-xs text-zinc-500 mb-1">ENHANCED TEXT:</div>
-            <div className="p-3 bg-zinc-900/80 text-emerald-400 font-mono text-sm rounded-sm border border-zinc-800">
-              {suggestion.enhancedText}
-            </div>
-          </div>
-          
-          <div className="flex gap-3 justify-end">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={handleRejectSuggestion}
-            >
-              Reject
-            </Button>
-            <Button 
-              size="sm"
-              onClick={handleAcceptSuggestion}
-            >
-              Accept & Apply
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 } 
