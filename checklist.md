@@ -11,26 +11,26 @@
 ## II. Backend Development (Python, FastAPI, Pydantic)
 
 ### A. Core API Setup
--   [ ] Initialize FastAPI application - `main.py`
--   [ ] Implement basic health check endpoint - `routers/health.py`
--   [ ] Configure CORS settings - `main.py`
+-   [x] Initialize FastAPI application - `main.py`
+-   [x] Implement basic health check endpoint - `routers/health.py`
+-   [x] Configure CORS settings - `main.py`
 
 ### B. User Authentication (OAuth2/JWT)
 -   [x] Define User Pydantic models (UserCreate, UserInDB, Token) - `models/user.py`
--   [ ] Implement password hashing utility - `utils/security.py`
--   [ ] Create user registration endpoint - `routers/auth.py`
--   [ ] Create user login endpoint (issue JWT token) - `routers/auth.py`
--   [ ] Implement token verification and user retrieval dependency - `dependencies/auth.py`
--   [ ] Secure relevant endpoints requiring authentication - `routers/opord.py`, `routers/ai.py`, `routers/analysis.py`
+-   [x] Implement password hashing utility - `utils/security.py`
+-   [x] Create user registration endpoint - `routers/auth.py`
+-   [x] Create user login endpoint (issue JWT token) - `routers/auth.py`
+-   [x] Implement token verification and user retrieval dependency - `dependencies/auth.py`
+-   [x] Secure relevant endpoints requiring authentication - `routers/opord.py`, `routers/ai.py`, `routers/analysis.py`
 
 ### C. OPORD Management
 -   [x] Define OPORD Pydantic models (OPORDCreate, OPORDUpdate, OPORDInDB) - `models/opord.py`
--   [ ] Implement CRUD operations for OPORDs:
-    -   [ ] Create OPORD endpoint - `routers/opord.py`
-    -   [ ] Get OPORD by ID endpoint - `routers/opord.py`
-    -   [ ] Get all OPORDs for a user endpoint - `routers/opord.py`
-    -   [ ] Update OPORD endpoint - `routers/opord.py`
-    -   [ ] Delete OPORD endpoint - `routers/opord.py`
+-   [x] Implement CRUD operations for OPORDs:
+    -   [x] Create OPORD endpoint - `routers/opord.py`
+    -   [x] Get OPORD by ID endpoint - `routers/opord.py`
+    -   [x] Get all OPORDs for a user endpoint - `routers/opord.py`
+    -   [x] Update OPORD endpoint - `routers/opord.py`
+    -   [x] Delete OPORD endpoint - `routers/opord.py`
 -   [x] Ensure OPORDs are associated with users - `models/opord.py`, `crud/opord.py`
 
 ### D. Tactical Task Recognition & Definition Store (FM 3-90, NER, pgvector)
