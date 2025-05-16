@@ -46,13 +46,13 @@
     -   [x] Define SQLAlchemy model for Tactical Tasks (name, definition, page_number, image_path, embedding vector if used) - `db/models.py`
     -   [x] Define Pydantic model for Tactical Task data (including page_number, image_path) - `models/tactical_task.py`
     -   [x] Implement CRUD functions for Tactical Tasks - `crud/tactical_task.py`
--   [ ] **NER Implementation & Service (Leveraging Gemini):**
-    -   [ ] Develop prompts and logic to leverage Gemini for NER to identify tactical task terms ("Occupy", "Secure", "Seize", etc.) in context from user input. - `services/ner_service.py` (calls Gemini)
-    -   [ ] Implement service to process input text:
-        -   [ ] Identify tactical task mentions using Gemini NER. - `services/tactical_analysis_service.py`
-        -   [ ] For each identified task, retrieve its definition, page number, image path, and other metadata from the PostgreSQL database. Use `pgvector` for similarity search if definitions are also embedded and fuzzy matching is desired. - `services/tactical_analysis_service.py`
--   [ ] **API Endpoint:**
-    -   [ ] Create/Update endpoint to receive text, perform tactical task recognition and definition lookup, and return structured data (task, position in text, definition, page_number, image_path). - `routers/analysis.py`
+-   [x] **NER Implementation & Service (Leveraging Gemini):**
+    -   [x] Develop prompts and logic to leverage Gemini for NER to identify tactical task terms ("Occupy", "Secure", "Seize", etc.) in context from user input. - `services/tactical_analysis_service.py`
+    -   [x] Implement service to process input text:
+        -   [x] Identify tactical task mentions using Gemini NER. - `services/tactical_analysis_service.py`
+        -   [x] For each identified task, retrieve its definition, page number, image path, and other metadata from the PostgreSQL database. Use `pgvector` for similarity search if definitions are also embedded and fuzzy matching is desired. - `services/tactical_analysis_service.py`
+-   [x] **API Endpoint:**
+    -   [x] Create/Update endpoint to receive text, perform tactical task recognition and definition lookup, and return structured data (task, position in text, definition, page_number, image_path). - `routers/analysis.py`
     -   [ ] Configure FastAPI to serve static image assets from the designated folder. - `main.py` (using `StaticFiles`)
 
 ### E. AI Text Enhancement (Gemini)

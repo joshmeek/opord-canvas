@@ -6,7 +6,6 @@ from typing import List, Any, Dict
 from app.dependencies.auth import get_current_active_user
 from app.dependencies.database import get_db
 from app.services.tactical_analysis_service import identify_and_retrieve_tactical_tasks
-from app.crud.tactical_task import get_all_tactical_task_names # To get known tasks
 from app.models.user import User # For current user dependency
 
 router = APIRouter(
@@ -26,23 +25,15 @@ async def analyze_text_for_tactical_tasks(
 ):
     """
     Analyzes input text to identify tactical tasks, their positions, and their details.
-    Leverages Gemini for NER and retrieves full task information from the database.
+    Leverages Gemini for NER and validates identified tasks against the database.
     """
     if not payload.text or not payload.text.strip():
         raise HTTPException(status_code=400, detail="Input text cannot be empty.")
 
-    # Fetch all known tactical task names from the database
-    # This list will be passed to the NER service to guide Gemini
-    known_task_names_db = get_all_tactical_task_names(db)
-    if not known_task_names_db:
-        # If there are no tasks in the DB, NER can't effectively find any
-        return []
-
     try:
         identified_tasks = await identify_and_retrieve_tactical_tasks(
             db=db, 
-            text=payload.text, 
-            known_task_names=known_task_names_db
+            text=payload.text
         )
         return identified_tasks
     except Exception as e:
