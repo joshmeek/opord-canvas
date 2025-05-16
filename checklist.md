@@ -56,10 +56,10 @@
     -   [ ] Configure FastAPI to serve static image assets from the designated folder. - `main.py` (using `StaticFiles`)
 
 ### E. AI Text Enhancement (Gemini)
--   [ ] Define Pydantic models for AI enhancement request/response - `models/ai.py`
--   [ ] Integrate with Gemini API for text enhancement - `services/ai_enhancer_service.py`
-    -   [ ] Develop prompts for Gemini to suggest improvements to military text.
--   [ ] Create endpoint to receive text selection and return AI suggestion from Gemini - `routers/ai.py`
+-   [x] Define Pydantic models for AI enhancement request/response - `models/ai.py`
+-   [x] Integrate with Gemini API for text enhancement - `services/ai_enhancer_service.py`
+    -   [x] Develop prompts for Gemini to suggest improvements to military text.
+-   [x] Create endpoint to receive text selection and return AI suggestion from Gemini - `routers/ai.py`
 
 ## III. Database (PostgreSQL with pgvector)
 

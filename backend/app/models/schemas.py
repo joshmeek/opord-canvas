@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 
 # User schemas
@@ -21,6 +21,7 @@ class User(UserBase):
 class OPORDBase(BaseModel):
     title: str
     content: str
+    analysis_results: Optional[List[Dict[str, Any]]] = None
 
 class OPORDCreate(OPORDBase):
     pass
@@ -28,6 +29,7 @@ class OPORDCreate(OPORDBase):
 class OPORDUpdate(OPORDBase):
     title: Optional[str] = None
     content: Optional[str] = None
+    analysis_results: Optional[List[Dict[str, Any]]] = None
 
 class OPORD(OPORDBase):
     id: int

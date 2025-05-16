@@ -10,4 +10,5 @@ pgvector
 google-generativeai
 python-dotenv
 email-validator
-PyMuPDF 
+PyMuPDF
+alembic 
