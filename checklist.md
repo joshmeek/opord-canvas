@@ -2,10 +2,10 @@
 
 ## I. Project Setup & Configuration
 
--   [ ] Initialize project repository (Git) - `N/A`
--   [ ] Set up Python backend environment (e.g., simple venv, pip) - `N/A`
--   [ ] Set up React frontend environment (e.g., Create React App, Vite) - `N/A`
--   [ ] Define project structure (backend, frontend, docker, docs, scripts, public/assets for PDF & images) - `N/A`
+-   [x] Initialize project repository (Git) - `N/A`
+-   [x] Set up Python backend environment (e.g., simple venv, pip) - `N/A`
+-   [x] Set up React frontend environment (e.g., Create React App, Vite) - `N/A`
+-   [x] Define project structure (backend, frontend, docker, docs, scripts, public/assets for PDF & images) - `N/A`
 -   [ ] Configure linters and formatters (e.g., Black, Flake8, Prettier, ESLint) - `N/A`
 
 ## II. Backend Development (Python, FastAPI, Pydantic)
@@ -16,7 +16,7 @@
 -   [ ] Configure CORS settings - `main.py`
 
 ### B. User Authentication (OAuth2/JWT)
--   [ ] Define User Pydantic models (UserCreate, UserInDB, Token) - `models/user.py`
+-   [x] Define User Pydantic models (UserCreate, UserInDB, Token) - `models/user.py`
 -   [ ] Implement password hashing utility - `utils/security.py`
 -   [ ] Create user registration endpoint - `routers/auth.py`
 -   [ ] Create user login endpoint (issue JWT token) - `routers/auth.py`
@@ -24,14 +24,14 @@
 -   [ ] Secure relevant endpoints requiring authentication - `routers/opord.py`, `routers/ai.py`, `routers/analysis.py`
 
 ### C. OPORD Management
--   [ ] Define OPORD Pydantic models (OPORDCreate, OPORDUpdate, OPORDInDB) - `models/opord.py`
+-   [x] Define OPORD Pydantic models (OPORDCreate, OPORDUpdate, OPORDInDB) - `models/opord.py`
 -   [ ] Implement CRUD operations for OPORDs:
     -   [ ] Create OPORD endpoint - `routers/opord.py`
     -   [ ] Get OPORD by ID endpoint - `routers/opord.py`
     -   [ ] Get all OPORDs for a user endpoint - `routers/opord.py`
     -   [ ] Update OPORD endpoint - `routers/opord.py`
     -   [ ] Delete OPORD endpoint - `routers/opord.py`
--   [ ] Ensure OPORDs are associated with users - `models/opord.py`, `crud/opord.py`
+-   [x] Ensure OPORDs are associated with users - `models/opord.py`, `crud/opord.py`
 
 ### D. Tactical Task Recognition & Definition Store (FM 3-90, NER, pgvector)
 -   [ ] **Data Preparation (Run as a script):**
@@ -128,10 +128,10 @@
 
 ## V. Dockerization
 
--   [ ] Create Dockerfile for the Python backend - `backend/Dockerfile`
--   [ ] Create Dockerfile for the React frontend (multi-stage build for serving static files, including PDF and extracted images) - `frontend/Dockerfile`
--   [ ] Create `docker-compose.yml` to orchestrate backend, frontend, and Postgres (with `pgvector`) database - `docker-compose.yml`
--   [ ] Configure environment variables for Docker containers - `.env` files, `docker-compose.yml`
+-   [x] Create Dockerfile for the Python backend - `backend/Dockerfile`
+-   [x] Create Dockerfile for the React frontend (multi-stage build for serving static files, including PDF and extracted images) - `frontend/Dockerfile`
+-   [x] Create `docker-compose.yml` to orchestrate backend, frontend, and Postgres (with `pgvector`) database - `docker-compose.yml`
+-   [x] Configure environment variables for Docker containers - `.env` files, `docker-compose.yml`
 -   [ ] Add scripts for building and running Docker containers (e.g., in `Makefile` or `package.json`) - `Makefile`
 
 ## VI. Testing (Comprehensive Coverage)
