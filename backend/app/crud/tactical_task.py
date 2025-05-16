@@ -4,17 +4,10 @@ from typing import List, Optional
 from app.models.tactical_task import TacticalTask
 from app.models.schemas import TacticalTaskCreate
 from pgvector.sqlalchemy import Vector
+from app.models.tactical_task import TacticalTask
 
 def create_tactical_task(db: Session, task: TacticalTaskCreate) -> TacticalTask:
-    db_task = TacticalTask(
-        name=task.name,
-        definition=task.definition,
-        page_number=task.page_number,
-        image_path=task.image_path,
-        related_figures=task.related_figures,
-        embedding=task.embedding,
-        source_reference=task.source_reference
-    )
+    db_task = TacticalTask(**task.model_dump())
     db.add(db_task)
     db.commit()
     db.refresh(db_task)
@@ -49,4 +42,9 @@ def delete_tactical_task(db: Session, task_id: int) -> bool:
         db.delete(db_task)
         db.commit()
         return True
-    return False 
+    return False
+
+def get_all_tactical_task_names(db: Session) -> List[str]:
+    """Retrieve a list of all unique tactical task names from the database."""
+    results = db.query(TacticalTask.name).distinct().all()
+    return [result[0] for result in results] 
