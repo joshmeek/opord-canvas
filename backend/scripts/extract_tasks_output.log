@@ -1,0 +1,386 @@
+2025-05-16 10:47:30,538 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 410 (Physical Page 411) ---
+2025-05-16 10:47:30,561 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 411 with Gemini.
+2025-05-16 10:47:30,561 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 411 to Gemini for task extraction. Text length: 3453 chars.
+2025-05-16 10:47:38,111 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 411 (cleaned): 
+[
+  {
+    "name": "ATTACK BY FIRE",
+    "definition": "Attack by fire is a tactical mission task using direct and indirect fires to engage an enemy from a distance. Friendly forces use direct fires, supported by indirect fires, to engage an enemy force without closing with the enemy to destroy, suppress, fix, or deceive that enemy. This task is usually given when the mission does not dictate or support occupation of the objective. An attack by fire is not done in conjunction with a maneuvering ...
+2025-05-16 10:47:38,112 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'ATTACK BY FIRE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:38,345 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:38,355 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-1_pdfpage410_0.png for figure reference Figure B-1 on PDF page 410
+2025-05-16 10:47:38,355 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'CONTROL' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:38,567 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:38,567 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'FIX' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:38,768 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:38,768 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'REDUCE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:38,973 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:38,973 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'BLOCK' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:39,180 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:39,180 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'COUNTERRECONNAISSANCE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:39,396 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:39,396 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'FOLLOW AND ASSUME' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:39,604 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:39,604 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'RETAIN' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:39,831 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:39,831 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'BREACH' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:40,039 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:40,040 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'DESTROY' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:40,242 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:40,242 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'FOLLOW AND SUPPORT' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:40,465 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:40,465 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'SECURE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:40,700 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:40,700 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'BYPASS' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:40,914 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:40,914 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'DISENGAGE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:41,122 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:41,122 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'INTERDICT' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:41,321 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:41,321 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'SEIZE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:41,513 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:41,514 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'CANALIZE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:41,712 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:41,712 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'DISRUPT' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:41,931 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:41,931 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'ISOLATE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:42,133 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:42,133 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'SUPPORT BY FIRE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:42,338 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:42,338 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'CLEAR' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:42,537 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:42,537 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'EXFILTRATE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:42,733 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:42,733 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'NEUTRALIZE' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:42,936 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:42,937 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'SUPPRESS' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:43,154 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:43,154 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'CONTAIN' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:43,360 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:43,360 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'OCCUPY' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:43,560 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:43,561 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'TURN' on PDF page 411 (Doc Page: B-1).
+2025-05-16 10:47:43,797 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:43,857 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'ATTACK BY FIRE'.
+2025-05-16 10:47:43,866 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: ATTACK BY FIRE
+2025-05-16 10:47:43,868 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'CONTROL'.
+2025-05-16 10:47:43,872 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: CONTROL
+2025-05-16 10:47:43,873 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'FIX'.
+2025-05-16 10:47:43,876 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: FIX
+2025-05-16 10:47:43,876 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'REDUCE'.
+2025-05-16 10:47:43,880 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: REDUCE
+2025-05-16 10:47:43,881 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'BLOCK'.
+2025-05-16 10:47:43,884 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: BLOCK
+2025-05-16 10:47:43,885 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'COUNTERRECONNAISSANCE'.
+2025-05-16 10:47:43,889 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: COUNTERRECONNAISSANCE
+2025-05-16 10:47:43,890 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'FOLLOW AND ASSUME'.
+2025-05-16 10:47:43,893 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: FOLLOW AND ASSUME
+2025-05-16 10:47:43,894 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'RETAIN'.
+2025-05-16 10:47:43,897 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: RETAIN
+2025-05-16 10:47:43,898 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'BREACH'.
+2025-05-16 10:47:43,901 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: BREACH
+2025-05-16 10:47:43,902 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'DESTROY'.
+2025-05-16 10:47:43,906 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: DESTROY
+2025-05-16 10:47:43,907 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'FOLLOW AND SUPPORT'.
+2025-05-16 10:47:43,910 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: FOLLOW AND SUPPORT
+2025-05-16 10:47:43,911 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'SECURE'.
+2025-05-16 10:47:43,914 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: SECURE
+2025-05-16 10:47:43,915 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'BYPASS'.
+2025-05-16 10:47:43,918 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: BYPASS
+2025-05-16 10:47:43,919 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'DISENGAGE'.
+2025-05-16 10:47:43,923 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: DISENGAGE
+2025-05-16 10:47:43,924 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'INTERDICT'.
+2025-05-16 10:47:43,927 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: INTERDICT
+2025-05-16 10:47:43,928 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'SEIZE'.
+2025-05-16 10:47:43,931 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: SEIZE
+2025-05-16 10:47:43,932 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'CANALIZE'.
+2025-05-16 10:47:43,935 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: CANALIZE
+2025-05-16 10:47:43,936 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'DISRUPT'.
+2025-05-16 10:47:43,938 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: DISRUPT
+2025-05-16 10:47:43,939 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'ISOLATE'.
+2025-05-16 10:47:43,942 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: ISOLATE
+2025-05-16 10:47:43,943 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'SUPPORT BY FIRE'.
+2025-05-16 10:47:43,946 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: SUPPORT BY FIRE
+2025-05-16 10:47:43,947 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'CLEAR'.
+2025-05-16 10:47:43,950 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: CLEAR
+2025-05-16 10:47:43,951 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'EXFILTRATE'.
+2025-05-16 10:47:43,953 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: EXFILTRATE
+2025-05-16 10:47:43,954 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'NEUTRALIZE'.
+2025-05-16 10:47:43,957 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: NEUTRALIZE
+2025-05-16 10:47:43,958 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'SUPPRESS'.
+2025-05-16 10:47:43,960 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: SUPPRESS
+2025-05-16 10:47:43,961 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'CONTAIN'.
+2025-05-16 10:47:43,965 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: CONTAIN
+2025-05-16 10:47:43,967 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'OCCUPY'.
+2025-05-16 10:47:43,970 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: OCCUPY
+2025-05-16 10:47:43,971 - INFO - extract_tactical_tasks - save_task_to_db - L235 - Creating new task 'TURN'.
+2025-05-16 10:47:43,974 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: TURN
+2025-05-16 10:47:43,974 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 411 (Physical Page 412) ---
+2025-05-16 10:47:44,002 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 412 with Gemini.
+2025-05-16 10:47:44,002 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 412 to Gemini for task extraction. Text length: 3995 chars.
+2025-05-16 10:47:47,366 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 412 (cleaned): 
+[
+  {
+    "name": "ATTACK BY FIRE",
+    "definition": "An attack by fire closely resembles the task of support by fire. The chief difference is that one unit conducts the support by fire task to support another unit, so the second unit can maneuver against enemy forces. The attack by fire task includes—\n          Assigning sectors of fire or engagement areas to each subordinate weapon system to include the\n           enemy force’s defensive positions or avenues of approach.\n          Desig...
+2025-05-16 10:47:47,367 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'ATTACK BY FIRE' on PDF page 412 (Doc Page: B-2).
+2025-05-16 10:47:47,585 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:47,590 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-1_pdfpage411_0.png for figure reference Figure B-1 on PDF page 411
+2025-05-16 10:47:47,590 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'BLOCK' on PDF page 412 (Doc Page: B-2).
+2025-05-16 10:47:47,784 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:47,788 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-2_pdfpage411_0.png for figure reference Figure B-2 on PDF page 411
+2025-05-16 10:47:47,788 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'BREACH' on PDF page 412 (Doc Page: B-2).
+2025-05-16 10:47:47,980 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:47,986 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'ATTACK BY FIRE' already exists, updating definition and other fields.
+2025-05-16 10:47:47,992 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: ATTACK BY FIRE
+2025-05-16 10:47:47,994 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'BLOCK' already exists, updating definition and other fields.
+2025-05-16 10:47:47,998 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: BLOCK
+2025-05-16 10:47:48,001 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'BREACH' already exists, updating definition and other fields.
+2025-05-16 10:47:48,008 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: BREACH
+2025-05-16 10:47:48,008 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 412 (Physical Page 413) ---
+2025-05-16 10:47:48,023 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 413 with Gemini.
+2025-05-16 10:47:48,023 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 413 to Gemini for task extraction. Text length: 2957 chars.
+2025-05-16 10:47:49,730 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 413 (cleaned): 
+[
+  {
+    "name": "BREACH",
+    "definition": "The area located between the arms of the graphic shows the general location for the breach. The length of the arms extend to include the entire depth of the area that must be breached. Breaching operations may be required to support an attack anywhere along the continuum from a deliberate to a hasty attack. Regardless of where the attack falls along the continuum, the breaching tenets— intelligence, breaching fundamentals, breaching organization, m...
+2025-05-16 10:47:49,730 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'BREACH' on PDF page 413 (Doc Page: B-3).
+2025-05-16 10:47:50,031 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:50,035 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-4_pdfpage412_0.png for figure reference Figure B-4 on PDF page 412
+2025-05-16 10:47:50,035 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'BYPASS' on PDF page 413 (Doc Page: B-3).
+2025-05-16 10:47:50,241 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:50,244 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-5_pdfpage412_0.png for figure reference Figure B-5 on PDF page 412
+2025-05-16 10:47:50,248 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'BREACH' already exists, updating definition and other fields.
+2025-05-16 10:47:50,254 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: BREACH
+2025-05-16 10:47:50,256 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'BYPASS' already exists, updating definition and other fields.
+2025-05-16 10:47:50,261 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: BYPASS
+2025-05-16 10:47:50,262 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 413 (Physical Page 414) ---
+2025-05-16 10:47:50,278 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 414 with Gemini.
+2025-05-16 10:47:50,278 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 414 to Gemini for task extraction. Text length: 3982 chars.
+2025-05-16 10:47:52,034 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 414 (cleaned): 
+[
+  {
+    "name": "CANALIZE",
+    "definition": "Canalize is a tactical mission task in which a unit restricts enemy movement to a narrow zone. Friendly forces do this by exploiting terrain coupled with the use of obstacles, fires, or friendly maneuver. Successful canalization results in moving the enemy formation, individual Soldiers, or weapon systems into a predetermined position where they are vulnerable to piecemeal destruction.",
+    "figure_references": ["Figure B-7"],
+    "document_page...
+2025-05-16 10:47:52,034 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'CANALIZE' on PDF page 414 (Doc Page: B-4).
+2025-05-16 10:47:52,242 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:52,260 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-7_pdfpage413_0.png for figure reference Figure B-7 on PDF page 413
+2025-05-16 10:47:52,261 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'CLEAR' on PDF page 414 (Doc Page: B-4).
+2025-05-16 10:47:52,465 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:52,478 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-8_pdfpage413_0.png for figure reference Figure B-8 on PDF page 413
+2025-05-16 10:47:52,483 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'CANALIZE' already exists, updating definition and other fields.
+2025-05-16 10:47:52,490 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: CANALIZE
+2025-05-16 10:47:52,492 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'CLEAR' already exists, updating definition and other fields.
+2025-05-16 10:47:52,497 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: CLEAR
+2025-05-16 10:47:52,497 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 414 (Physical Page 415) ---
+2025-05-16 10:47:52,523 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 415 with Gemini.
+2025-05-16 10:47:52,523 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 415 to Gemini for task extraction. Text length: 4061 chars.
+2025-05-16 10:47:55,692 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 415 (cleaned): 
+[
+  {
+    "name": "CONTAIN",
+    "definition": "Contain is a tactical mission task in which a unit stops, holds, or surrounds an enemy force. This causes the enemy to center their activity on a given front and prevent them from withdrawing any part of their forces for use elsewhere. Contain may identify a specific enemy unit, or geographic terms or time may express the  limits of the containment. Containment allows an enemy force to reposition itself within the designated geographic area, while...
+2025-05-16 10:47:55,692 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'CONTAIN' on PDF page 415 (Doc Page: B-5).
+2025-05-16 10:47:55,913 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:55,919 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-9_pdfpage414_0.png for figure reference Figure B-9 on PDF page 414
+2025-05-16 10:47:55,919 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'CONTROL' on PDF page 415 (Doc Page: B-5).
+2025-05-16 10:47:56,120 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:56,124 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-10_pdfpage414_0.png for figure reference Figure B-10 on PDF page 414
+2025-05-16 10:47:56,125 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'COUNTERRECONNAISSANCE' on PDF page 415 (Doc Page: B-5).
+2025-05-16 10:47:56,326 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:56,326 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'DESTROY' on PDF page 415 (Doc Page: B-5).
+2025-05-16 10:47:56,528 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:56,532 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-11_pdfpage414_0.png for figure reference Figure B-11 on PDF page 414
+2025-05-16 10:47:56,539 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'CONTAIN' already exists, updating definition and other fields.
+2025-05-16 10:47:56,548 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: CONTAIN
+2025-05-16 10:47:56,553 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'CONTROL' already exists, updating definition and other fields.
+2025-05-16 10:47:56,562 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: CONTROL
+2025-05-16 10:47:56,566 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'COUNTERRECONNAISSANCE' already exists, updating definition and other fields.
+2025-05-16 10:47:56,574 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: COUNTERRECONNAISSANCE
+2025-05-16 10:47:56,579 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'DESTROY' already exists, updating definition and other fields.
+2025-05-16 10:47:56,587 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: DESTROY
+2025-05-16 10:47:56,588 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 415 (Physical Page 416) ---
+2025-05-16 10:47:56,620 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 416 with Gemini.
+2025-05-16 10:47:56,620 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 416 to Gemini for task extraction. Text length: 4257 chars.
+2025-05-16 10:47:58,393 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 416 (cleaned): 
+[
+  {
+    "name": "DISENGAGE",
+    "definition": "Disengage is a tactical mission task in which a unit breaks contact with an enemy to conduct another mission or to avoid becoming decisively engaged. It involves moving to a location where enemy forces cannot engage the friendly force with either direct fires or observed indirect fires. Disengaging from enemy forces while displacing from one position to the next is a difficult procedure.",
+    "figure_references": [
+      "Figure B-12"
+    ],
+  ...
+2025-05-16 10:47:58,393 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'DISENGAGE' on PDF page 416 (Doc Page: B-6).
+2025-05-16 10:47:59,397 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:47:59,404 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-12_pdfpage415_0.png for figure reference Figure B-12 on PDF page 415
+2025-05-16 10:47:59,404 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'DISRUPT' on PDF page 416 (Doc Page: B-6).
+2025-05-16 10:48:00,381 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:00,386 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-13_pdfpage415_0.png for figure reference Figure B-13 on PDF page 415
+2025-05-16 10:48:00,395 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'DISENGAGE' already exists, updating definition and other fields.
+2025-05-16 10:48:00,405 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: DISENGAGE
+2025-05-16 10:48:00,408 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'DISRUPT' already exists, updating definition and other fields.
+2025-05-16 10:48:00,414 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: DISRUPT
+2025-05-16 10:48:00,414 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 416 (Physical Page 417) ---
+2025-05-16 10:48:00,443 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 417 with Gemini.
+2025-05-16 10:48:00,443 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 417 to Gemini for task extraction. Text length: 4246 chars.
+2025-05-16 10:48:02,895 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 417 (cleaned): 
+[
+  {
+    "name": "DISRUPT",
+    "definition": "Disrupt is an obstacle effect that focuses fire planning and obstacle effort to cause the enemy to break up its formation and tempo,  interrupt  its  timetable, commit breaching assets prematurely, and attack in a piecemeal  effort. It also helps to deceive an enemy force concerning the location of friendly defensive positions, to separate combat echelons, or to separate combat forces from their logistics support.",
+    "figure_references": [
+    ...
+2025-05-16 10:48:02,896 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'DISRUPT' on PDF page 417 (Doc Page: B-7).
+2025-05-16 10:48:03,871 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:03,875 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-14_pdfpage416_0.png for figure reference Figure B-14 on PDF page 416
+2025-05-16 10:48:03,875 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'EXFILTRATE' on PDF page 417 (Doc Page: B-7).
+2025-05-16 10:48:04,869 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:04,873 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-15_pdfpage416_0.png for figure reference Figure B-15 on PDF page 416
+2025-05-16 10:48:04,877 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'DISRUPT' already exists, updating definition and other fields.
+2025-05-16 10:48:04,883 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: DISRUPT
+2025-05-16 10:48:04,887 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'EXFILTRATE' already exists, updating definition and other fields.
+2025-05-16 10:48:04,892 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: EXFILTRATE
+2025-05-16 10:48:04,893 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 417 (Physical Page 418) ---
+2025-05-16 10:48:04,911 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 418 with Gemini.
+2025-05-16 10:48:04,911 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 418 to Gemini for task extraction. Text length: 3726 chars.
+2025-05-16 10:48:06,311 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 418 (cleaned): 
+[
+  {
+    "name": "FIX",
+    "definition": "Fix is a tactical mission task in which a unit prevents the enemy from moving from a specific location for a specific period.",
+    "figure_references": [
+      "Figure B-16",
+      "Figure B-17"
+    ],
+    "document_page_number": "B-8"
+  },
+  {
+    "name": "FOLLOW AND ASSUME",
+    "definition": "Follow and assume is a tactical mission task in which a committed force follows and supports a lead force conducting an offensive operation and continues the...
+2025-05-16 10:48:06,311 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'FIX' on PDF page 418 (Doc Page: B-8).
+2025-05-16 10:48:06,509 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:06,514 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-16_pdfpage417_0.png for figure reference Figure B-16 on PDF page 417
+2025-05-16 10:48:06,514 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'FOLLOW AND ASSUME' on PDF page 418 (Doc Page: B-8).
+2025-05-16 10:48:06,717 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:06,722 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-18_pdfpage417_0.png for figure reference Figure B-18 on PDF page 417
+2025-05-16 10:48:06,727 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'FIX' already exists, updating definition and other fields.
+2025-05-16 10:48:06,732 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: FIX
+2025-05-16 10:48:06,735 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'FOLLOW AND ASSUME' already exists, updating definition and other fields.
+2025-05-16 10:48:06,741 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: FOLLOW AND ASSUME
+2025-05-16 10:48:06,741 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 418 (Physical Page 419) ---
+2025-05-16 10:48:06,764 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 419 with Gemini.
+2025-05-16 10:48:06,764 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 419 to Gemini for task extraction. Text length: 4187 chars.
+2025-05-16 10:48:08,458 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 419 (cleaned): 
+[
+  {
+    "name": "FOLLOW AND SUPPORT",
+    "definition": "Follow and support is a tactical mission task in which a committed force follows and supports a lead force conducting an offensive operation. A follow and support force is not a reserve but is a force committed to specific tasks. It contains an arrow graphic around the symbol of the unit being assigned this task.",
+    "figure_references": [
+      "Figure B-19"
+    ],
+    "document_page_number": "B-9"
+  },
+  {
+    "name": "INTERDICT",
+ ...
+2025-05-16 10:48:08,458 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'FOLLOW AND SUPPORT' on PDF page 419 (Doc Page: B-9).
+2025-05-16 10:48:08,675 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:08,678 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-19_pdfpage418_0.png for figure reference Figure B-19 on PDF page 418
+2025-05-16 10:48:08,678 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'INTERDICT' on PDF page 419 (Doc Page: B-9).
+2025-05-16 10:48:08,877 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:08,880 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-20_pdfpage418_0.png for figure reference Figure B-20 on PDF page 418
+2025-05-16 10:48:08,886 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'FOLLOW AND SUPPORT' already exists, updating definition and other fields.
+2025-05-16 10:48:08,892 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: FOLLOW AND SUPPORT
+2025-05-16 10:48:08,894 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'INTERDICT' already exists, updating definition and other fields.
+2025-05-16 10:48:08,899 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: INTERDICT
+2025-05-16 10:48:08,900 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 419 (Physical Page 420) ---
+2025-05-16 10:48:08,932 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 420 with Gemini.
+2025-05-16 10:48:08,932 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 420 to Gemini for task extraction. Text length: 4119 chars.
+2025-05-16 10:48:11,795 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 420 (cleaned): 
+[
+  {
+    "name": "ISOLATE",
+    "definition": "Isolate is a tactical mission task in which a unit seals off an enemy, physically and psychologically, from sources of support and denies it freedom of movement. An isolated force is prevented from having contact with other enemy forces. A unit does not allow an isolated enemy force sanctuary within its present position. Instead, a unit continues to conduct offensive actions against an enemy force. The position or direction of the arrow has no sig...
+2025-05-16 10:48:11,795 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'ISOLATE' on PDF page 420 (Doc Page: B-10).
+2025-05-16 10:48:12,011 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:12,017 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-21_pdfpage419_0.png for figure reference Figure B-21 on PDF page 419
+2025-05-16 10:48:12,017 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'NEUTRALIZE' on PDF page 420 (Doc Page: B-10).
+2025-05-16 10:48:12,224 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:12,229 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-22_pdfpage419_0.png for figure reference Figure B-22 on PDF page 419
+2025-05-16 10:48:12,229 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'OCCUPY' on PDF page 420 (Doc Page: B-10).
+2025-05-16 10:48:12,440 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:12,444 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-23_pdfpage419_0.png for figure reference Figure B-23 on PDF page 419
+2025-05-16 10:48:12,452 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'ISOLATE' already exists, updating definition and other fields.
+2025-05-16 10:48:12,460 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: ISOLATE
+2025-05-16 10:48:12,463 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'NEUTRALIZE' already exists, updating definition and other fields.
+2025-05-16 10:48:12,470 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: NEUTRALIZE
+2025-05-16 10:48:12,473 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'OCCUPY' already exists, updating definition and other fields.
+2025-05-16 10:48:12,479 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: OCCUPY
+2025-05-16 10:48:12,480 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 420 (Physical Page 421) ---
+2025-05-16 10:48:12,508 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 421 with Gemini.
+2025-05-16 10:48:12,508 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 421 to Gemini for task extraction. Text length: 3572 chars.
+2025-05-16 10:48:17,025 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 421 (cleaned): 
+[
+  {
+    "name": "REDUCE",
+    "definition": "Reduce is a tactical mission task in which a unit destroys an encircled or bypassed enemy force.\n    This task can occur at any location on the battlefield. Reduce is also a mobility task to create and mark lanes\n    through, over, or around an obstacle to allow the attacking force to accomplish  its mission (ATP 3-\n   90.4/MCTP 3-34A). There is no symbol for this task.",
+    "figure_references": [],
+    "document_page_number": "B-11"
+  },
+  {
+ ...
+2025-05-16 10:48:17,026 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'REDUCE' on PDF page 421 (Doc Page: B-11).
+2025-05-16 10:48:17,244 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:17,244 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'RETAIN' on PDF page 421 (Doc Page: B-11).
+2025-05-16 10:48:17,468 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:17,474 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-24_pdfpage420_0.png for figure reference Figure B-24 on PDF page 420
+2025-05-16 10:48:17,475 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'SECURE' on PDF page 421 (Doc Page: B-11).
+2025-05-16 10:48:17,688 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:17,692 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-25_pdfpage420_0.png for figure reference Figure B-25 on PDF page 420
+2025-05-16 10:48:17,692 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'SEIZE' on PDF page 421 (Doc Page: B-11).
+2025-05-16 10:48:17,891 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:17,896 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-26_pdfpage420_0.png for figure reference Figure B-26 on PDF page 420
+2025-05-16 10:48:17,903 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'REDUCE' already exists, updating definition and other fields.
+2025-05-16 10:48:17,912 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: REDUCE
+2025-05-16 10:48:17,916 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'RETAIN' already exists, updating definition and other fields.
+2025-05-16 10:48:17,922 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: RETAIN
+2025-05-16 10:48:17,926 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'SECURE' already exists, updating definition and other fields.
+2025-05-16 10:48:17,933 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: SECURE
+2025-05-16 10:48:17,937 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'SEIZE' already exists, updating definition and other fields.
+2025-05-16 10:48:17,944 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: SEIZE
+2025-05-16 10:48:17,944 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 421 (Physical Page 422) ---
+2025-05-16 10:48:17,974 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 422 with Gemini.
+2025-05-16 10:48:17,974 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 422 to Gemini for task extraction. Text length: 3537 chars.
+2025-05-16 10:48:19,942 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 422 (cleaned): 
+[
+  {
+    "name": "SUPPORT BY FIRE",
+    "definition": "Support by fire is a tactical mission task in which a unit engages the enemy by direct fire in support of another maneuvering force. The primary objective of the support force is normally to fix and suppress enemy forces so that they cannot effectively fire on the maneuvering force. The secondary objective is to destroy enemy forces if they try to reposition. The commander specifies the desired effect on enemy forces when assigning this ta...
+2025-05-16 10:48:19,942 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'SUPPORT BY FIRE' on PDF page 422 (Doc Page: B-12).
+2025-05-16 10:48:20,150 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:20,154 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-27_pdfpage421_0.png for figure reference Figure B-27 on PDF page 421
+2025-05-16 10:48:20,154 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'SUPPRESS' on PDF page 422 (Doc Page: B-12).
+2025-05-16 10:48:20,363 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:20,366 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-28_pdfpage421_0.png for figure reference Figure B-28 on PDF page 421
+2025-05-16 10:48:20,372 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'SUPPORT BY FIRE' already exists, updating definition and other fields.
+2025-05-16 10:48:20,379 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: SUPPORT BY FIRE
+2025-05-16 10:48:20,382 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'SUPPRESS' already exists, updating definition and other fields.
+2025-05-16 10:48:20,388 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: SUPPRESS
+2025-05-16 10:48:20,388 - INFO - extract_tactical_tasks - main - L273 - --- Processing PDF Page Index 422 (Physical Page 423) ---
+2025-05-16 10:48:20,405 - INFO - extract_tactical_tasks - process_page - L180 - Processing PDF Page 423 with Gemini.
+2025-05-16 10:48:20,405 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L110 - Sending text from physical PDF page 423 to Gemini for task extraction. Text length: 1952 chars.
+2025-05-16 10:48:21,898 - DEBUG - extract_tactical_tasks - extract_tasks_with_gemini - L121 - Gemini response for physical PDF page 423 (cleaned): 
+[
+  {
+    "name": "TURN",
+    "definition": "Turn is a tactical mission task in which a unit forces an enemy force from one avenue of approach or movement corridor to another. A commander relates obstacles, fires, and terrain to improve the friendly tactical situation while degrading the enemy force’s situation. For example, in the offense, a commander might want to turn a pursued enemy force to place it in a position where the friendly force can destroy it. In the defense, a commander might wa...
+2025-05-16 10:48:21,899 - INFO - extract_tactical_tasks - process_page - L199 - Gemini extracted task: 'TURN' on PDF page 423 (Doc Page: B-13).
+2025-05-16 10:48:22,106 - WARNING - extract_tactical_tasks - generate_embedding - L61 - Embedding dimension mismatch for model models/embedding-001. Native: 768, Target: 1536. Padding/truncating.
+2025-05-16 10:48:22,111 - INFO - extract_tactical_tasks - extract_and_save_image - L161 - Saved image locally: /Users/joshmeek/personal_code/mil/backend/scripts/public/task_images/figure_b-29_pdfpage422_0.png for figure reference Figure B-29 on PDF page 422
+2025-05-16 10:48:22,119 - INFO - extract_tactical_tasks - save_task_to_db - L226 - Task 'TURN' already exists, updating definition and other fields.
+2025-05-16 10:48:22,127 - INFO - extract_tactical_tasks - save_task_to_db - L240 - Saved/Updated task: TURN
+2025-05-16 10:48:22,135 - INFO - extract_tactical_tasks - main - L296 - Script finished.

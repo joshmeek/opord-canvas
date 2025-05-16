@@ -9,4 +9,5 @@ python-multipart
 pgvector
 google-generativeai
 python-dotenv
-email-validator 
+email-validator
+PyMuPDF 

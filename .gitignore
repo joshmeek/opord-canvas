@@ -35,4 +35,11 @@ docker-compose.override.yml
 
 # OS specific
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Added by Gemini Agent
+# Ignore specific PDF in backend scripts
+backend/scripts/ARN38160-FM_3-90-000-WEB-1.pdf
+
+# Ignore extracted images in backend scripts
+backend/scripts/public/task_images/ 

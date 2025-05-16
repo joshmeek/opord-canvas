@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.crud import user as user_crud
 from app.models.schemas import UserCreate, Token, User
-from app.utils.security import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.dependencies.auth import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
 from app.dependencies.database import get_db
 
 router = APIRouter(prefix="/auth", tags=["auth"])

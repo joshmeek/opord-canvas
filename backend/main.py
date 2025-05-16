@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.routers import auth, opord
+from app.routers import auth, opord, tactical_task
 
 app = FastAPI(title="OPORD Canvas Editor API")
 
@@ -17,6 +17,7 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router)
 app.include_router(opord.router)
+app.include_router(tactical_task.router)
 
 @app.get("/health")
 async def health_check():

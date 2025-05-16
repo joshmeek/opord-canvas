@@ -34,18 +34,18 @@
 -   [x] Ensure OPORDs are associated with users - `models/opord.py`, `crud/opord.py`
 
 ### D. Tactical Task Recognition & Definition Store (FM 3-90, NER, pgvector)
--   [ ] **Data Preparation (Run as a script):**
-    -   [ ] Develop script to download/access FM 3-90 PDF - `scripts/prepare_tactical_data.py`
-    -   [ ] Implement PDF text extraction for relevant sections (e.g., Annex B for "Occupy", "Secure", "Seize" from pages B-10, B-11) - `scripts/prepare_tactical_data.py`
-    -   [ ] Extract task names, their full definitions, **page numbers in FM 3-90**, and **references to associated images/diagrams** (e.g., Figure B-23 for "Occupy"). - `scripts/prepare_tactical_data.py`
-    -   [ ] Implement logic to extract images/diagrams related to tasks from the PDF (e.g., using `PyMuPDF`). Store images in a designated assets folder (e.g., `public/assets/doctrinal_images/`). - `scripts/prepare_tactical_data.py`
-    -   [ ] Clean and structure extracted data (task, definition, page number, image path/identifier) - `scripts/prepare_tactical_data.py`
-    -   [ ] Generate embeddings for task definitions (using Gemini) if using semantic search for definitions - `scripts/prepare_tactical_data.py`
-    -   [ ] Store task names, definitions, page numbers, image paths/identifiers, and optional embeddings in PostgreSQL (using `pgvector` for embedding column) - `scripts/prepare_tactical_data.py` (calls `crud/tactical_task.py`)
--   [ ] **Database Model & CRUD for Tactical Tasks:**
-    -   [ ] Define SQLAlchemy model for Tactical Tasks (name, definition, page_number, image_path, embedding vector if used) - `db/models.py`
-    -   [ ] Define Pydantic model for Tactical Task data (including page_number, image_path) - `models/tactical_task.py`
-    -   [ ] Implement CRUD functions for Tactical Tasks - `crud/tactical_task.py`
+-   [x] **Data Preparation (Run as a script):**
+    -   [x] Develop script to download/access FM 3-90 PDF - `scripts/prepare_tactical_data.py`
+    -   [x] Implement PDF text extraction for relevant sections (e.g., Annex B for "Occupy", "Secure", "Seize" from pages B-10, B-11) - `scripts/prepare_tactical_data.py`
+    -   [x] Extract task names, their full definitions, **page numbers in FM 3-90**, and **references to associated images/diagrams** (e.g., Figure B-23 for "Occupy"). - `scripts/prepare_tactical_data.py`
+    -   [x] Implement logic to extract images/diagrams related to tasks from the PDF (e.g., using `PyMuPDF`). Store images in a designated assets folder (e.g., `public/assets/doctrinal_images/`). - `scripts/prepare_tactical_data.py`
+    -   [x] Clean and structure extracted data (task, definition, page number, image path/identifier) - `scripts/prepare_tactical_data.py`
+    -   [x] Generate embeddings for task definitions (using Gemini) if using semantic search for definitions - `scripts/prepare_tactical_data.py`
+    -   [x] Store task names, definitions, page numbers, image paths/identifiers, and optional embeddings in PostgreSQL (using `pgvector` for embedding column) - `scripts/prepare_tactical_data.py` (calls `crud/tactical_task.py`)
+-   [x] **Database Model & CRUD for Tactical Tasks:**
+    -   [x] Define SQLAlchemy model for Tactical Tasks (name, definition, page_number, image_path, embedding vector if used) - `db/models.py`
+    -   [x] Define Pydantic model for Tactical Task data (including page_number, image_path) - `models/tactical_task.py`
+    -   [x] Implement CRUD functions for Tactical Tasks - `crud/tactical_task.py`
 -   [ ] **NER Implementation & Service (Leveraging Gemini):**
     -   [ ] Develop prompts and logic to leverage Gemini for NER to identify tactical task terms ("Occupy", "Secure", "Seize", etc.) in context from user input. - `services/ner_service.py` (calls Gemini)
     -   [ ] Implement service to process input text:
@@ -63,14 +63,14 @@
 
 ## III. Database (PostgreSQL with pgvector)
 
--   [ ] Install and configure `pgvector` extension in PostgreSQL - `Dockerfile` for Postgres / DB setup scripts
--   [ ] Design database schema (users, opords, tactical_tasks tables with new fields) - `db/schema.sql` or Alembic migrations
--   [ ] Set up SQLAlchemy (or other ORM/query builder) - `db/session.py`, `db/base.py`
--   [ ] Define SQLAlchemy models (User, OPORD, TacticalTask with vector field, page_number, image_path) - `db/models.py`
--   [ ] Implement CRUD database functions for Users - `crud/user.py`
--   [ ] Implement CRUD database functions for OPORDs - `crud/opord.py`
--   [ ] Implement CRUD database functions for TacticalTasks (including vector storage/retrieval and new fields) - `crud/tactical_task.py`
--   [ ] Implement database migrations (e.g., Alembic) - `alembic/`
+-   [x] Install and configure `pgvector` extension in PostgreSQL - `Dockerfile` for Postgres / DB setup scripts
+-   [x] Design database schema (users, opords, tactical_tasks tables with new fields) - `db/schema.sql` or Alembic migrations
+-   [x] Set up SQLAlchemy (or other ORM/query builder) - `db/session.py`, `db/base.py`
+-   [x] Define SQLAlchemy models (User, OPORD, TacticalTask with vector field, page_number, image_path) - `db/models.py`
+-   [x] Implement CRUD database functions for Users - `crud/user.py`
+-   [x] Implement CRUD database functions for OPORDs - `crud/opord.py`
+-   [x] Implement CRUD database functions for TacticalTasks (including vector storage/retrieval and new fields) - `crud/tactical_task.py`
+-   [x] Implement database migrations (e.g., Alembic) - `alembic/`
 
 ## IV. Frontend Development (React, Tailwind CSS)
 
