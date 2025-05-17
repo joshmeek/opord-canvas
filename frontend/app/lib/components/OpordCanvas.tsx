@@ -46,6 +46,7 @@ export function OpordCanvas({
   const [highlightedText, setHighlightedText] = useState<JSX.Element | null>(null);
   const [showAIPane, setShowAIPane] = useState(false);
   const [selectedText, setSelectedText] = useState('');
+  const [caretPosition, setCaretPosition] = useState<number | null>(null);
   const { analyzeOpord, analysisResults } = useOpord();
   const { 
     suggestion, 
@@ -56,7 +57,6 @@ export function OpordCanvas({
     isLoading: isAILoading 
   } = useAI();
   
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -86,9 +86,8 @@ export function OpordCanvas({
   
   // Auto-analyze content when it changes (debounced)
   useEffect(() => {
-    if (debouncedContent !== initialContent && !readOnly) {
-      runAnalysis();
-    }
+    // Remove auto-analysis on content change, only analyze when explicitly saved
+    // This comment left to show what was removed
   }, [debouncedContent, initialContent, readOnly]);
   
   // Handle manual analysis
@@ -104,42 +103,89 @@ export function OpordCanvas({
   };
   
   // Handle selection change for AI enhancement
-  const handleSelectionChange = () => {
+  const handleSelectionChange = (e?: MouseEvent) => {
     if (readOnly) return;
     
-    const selection = window.getSelection();
-    
-    if (selection && selection.toString() && contentRef.current) {
-      // Get the selected range
-      const range = selection.getRangeAt(0);
+    // Short delay to let the selection stabilize
+    setTimeout(() => {
+      const selection = window.getSelection();
       
-      // Only process selection if it's within our content div
-      if (contentRef.current.contains(range.commonAncestorContainer)) {
-        // Calculate selection position in text
-        const fullText = content;
-        const selectedText = selection.toString();
-        setSelectedText(selectedText);
+      if (selection && selection.toString() && contentRef.current) {
+        // Get the selected range
+        const range = selection.getRangeAt(0);
         
-        // Find indexes of this selection in the content
-        // This is a simplified approach - we're assuming the selected text is unique in the content
-        const start = fullText.indexOf(selectedText);
-        if (start >= 0) {
-          const end = start + selectedText.length;
-          setSelection({ start, end });
-          // Open AI pane when text is selected in edit mode
-          if (!readOnly && selectedText.trim().length > 0) {
+        // Only process selection if it's within our content div
+        if (contentRef.current.contains(range.commonAncestorContainer)) {
+          // Calculate selection position in text
+          const selectedText = selection.toString();
+          
+          // Only proceed if we have meaningful selected text (not just whitespace)
+          if (selectedText.trim().length > 0) {
+            setSelectedText(selectedText);
+            
+            // We need to calculate the actual position in the content string
+            // This is more complex with highlighted text, so we'll use a different approach
+            
+            // Get all text nodes before the selection start
+            const textNodesBeforeSelection = getTextNodesUpTo(contentRef.current, range.startContainer);
+            const offsetBefore = textNodesBeforeSelection.reduce((total, node) => {
+              return total + (node.textContent || '').length;
+            }, 0);
+            
+            const start = offsetBefore + range.startOffset;
+            const end = start + selectedText.length;
+            
+            setSelection({ start, end });
+            
+            // Open AI pane when text is selected in edit mode
             setShowAIPane(true);
+            return;
           }
-          return;
         }
       }
+      
+      // Don't clear selection if AI pane is shown with suggestion
+      if (!suggestion) {
+        setSelection(null);
+        setSelectedText('');
+      }
+    }, 10); // Small delay to ensure selection is complete
+  };
+  
+  // Helper function to get all text nodes up to a specific node
+  const getTextNodesUpTo = (rootNode: Node, endNode: Node): Text[] => {
+    const textNodes: Text[] = [];
+    const treeWalker = document.createTreeWalker(
+      rootNode,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode: (node) => {
+          // Skip empty text nodes
+          if (!node.textContent || node.textContent.trim() === '') {
+            return NodeFilter.FILTER_REJECT;
+          }
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
+    
+    let currentNode: Node | null = treeWalker.nextNode();
+    
+    while (currentNode) {
+      if (currentNode === endNode) {
+        break;
+      }
+      
+      // Check if current node is before the end node in document order
+      if (rootNode.contains(endNode) && 
+          (currentNode.compareDocumentPosition(endNode) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+        textNodes.push(currentNode as Text);
+      }
+      
+      currentNode = treeWalker.nextNode();
     }
     
-    // Don't clear selection if AI pane is shown with suggestion
-    if (!suggestion) {
-      setSelection(null);
-      setSelectedText('');
-    }
+    return textNodes;
   };
   
   // Convert API format analysis results to our internal format
@@ -273,7 +319,7 @@ export function OpordCanvas({
       // Add regular text before this task
       if (pos.start > lastIndex) {
         elements.push(
-          <span key={`text-${i}`}>
+          <span key={`text-${i}`} className="text-section">
             {content.substring(lastIndex, pos.start)}
           </span>
         );
@@ -300,7 +346,7 @@ export function OpordCanvas({
     // Add remaining text after the last task
     if (lastIndex < content.length) {
       elements.push(
-        <span key="text-last">
+        <span key="text-last" className="text-section">
           {content.substring(lastIndex)}
         </span>
       );
@@ -349,6 +395,8 @@ export function OpordCanvas({
     
     if (onSave) {
       onSave(newContent);
+      
+      // Do NOT analyze after accepting - we'll let the user decide when to analyze
     }
     
     // Clear suggestion and selection
@@ -364,36 +412,177 @@ export function OpordCanvas({
     clearSuggestion();
   };
   
-  // Handle "real" textarea input changes (when editing)
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newContent = e.target.value;
-    setContent(newContent);
+  // Handle key presses for text editing
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (readOnly) return;
     
-    if (onSave) {
-      onSave(newContent);
+    // Special key handling
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const newContent = insertAtCaret('\t');
+      setContent(newContent);
+      if (onSave) onSave(newContent);
+      return;
+    }
+    
+    // Don't interfere with keyboard shortcuts (Ctrl+C, Ctrl+V, etc.)
+    if (e.ctrlKey || e.metaKey) return;
+    
+    // Do not handle other keys that have special meaning (arrow keys, home, end, etc.)
+    const nonContentKeys = [
+      'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+      'Home', 'End', 'PageUp', 'PageDown',
+      'Shift', 'Control', 'Alt', 'Meta',
+      'Escape', 'CapsLock', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12'
+    ];
+    
+    if (nonContentKeys.includes(e.key)) return;
+  };
+  
+  // Handle direct text input for editing
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (readOnly) return;
+    
+    // Let browser handle copy, paste, etc.
+    if (e.ctrlKey || e.metaKey) return;
+    
+    e.preventDefault(); // Prevent default for other keypresses
+    
+    if (e.key === 'Enter') {
+      const newContent = insertAtCaret('\n');
+      setContent(newContent);
+      if (onSave) onSave(newContent);
+    } else if (e.key === 'Backspace') {
+      const selection = window.getSelection();
+      
+      // If there's a text selection, delete it
+      if (selection && selection.toString()) {
+        const range = selection.getRangeAt(0);
+        if (contentRef.current?.contains(range.commonAncestorContainer)) {
+          const selectedText = selection.toString();
+          const start = content.indexOf(selectedText);
+          if (start >= 0) {
+            const end = start + selectedText.length;
+            const newContent = content.substring(0, start) + content.substring(end);
+            setContent(newContent);
+            if (onSave) onSave(newContent);
+            setCaretPosition(start);
+          }
+        }
+      } 
+      // Otherwise delete the character before the caret
+      else if (caretPosition !== null && caretPosition > 0) {
+        const newContent = 
+          content.substring(0, caretPosition - 1) + 
+          content.substring(caretPosition);
+        setContent(newContent);
+        if (onSave) onSave(newContent);
+        setCaretPosition(caretPosition - 1);
+      }
+    } else if (e.key.length === 1) { // Regular character input
+      const newContent = insertAtCaret(e.key);
+      setContent(newContent);
+      if (onSave) onSave(newContent);
     }
   };
   
-  // Listen to mouseup for text selection
-  useEffect(() => {
-    const handleMouseUp = () => handleSelectionChange();
-    document.addEventListener('mouseup', handleMouseUp);
-    return () => document.removeEventListener('mouseup', handleMouseUp);
-  }, [content, readOnly]);
-  
-  // Hidden textarea used only for editing
-  const renderHiddenTextarea = () => {
-    if (readOnly) return null;
+  // Helper function to insert text at current caret position
+  const insertAtCaret = (textToInsert: string): string => {
+    // If there's a selection, replace it
+    const selection = window.getSelection();
+    if (selection && selection.toString()) {
+      const range = selection.getRangeAt(0);
+      if (contentRef.current?.contains(range.commonAncestorContainer)) {
+        const selectedText = selection.toString();
+        const start = content.indexOf(selectedText);
+        if (start >= 0) {
+          const end = start + selectedText.length;
+          const newContent = 
+            content.substring(0, start) + 
+            textToInsert + 
+            content.substring(end);
+          
+          // Set caret position after inserted text
+          setCaretPosition(start + textToInsert.length);
+          return newContent;
+        }
+      }
+    }
     
-    return (
-      <textarea
-        ref={textareaRef}
-        value={content}
-        onChange={handleContentChange}
-        className="absolute top-0 left-0 opacity-0 pointer-events-none h-0"
-      />
-    );
+    // Otherwise insert at current caret position
+    if (caretPosition !== null) {
+      const newContent = 
+        content.substring(0, caretPosition) + 
+        textToInsert + 
+        content.substring(caretPosition);
+      
+      // Update caret position
+      setCaretPosition(caretPosition + textToInsert.length);
+      return newContent;
+    }
+    
+    // Fallback: append to end if no caret position
+    const newContent = content + textToInsert;
+    setCaretPosition(newContent.length);
+    return newContent;
   };
+  
+  // Track caret position in the content
+  const updateCaretPosition = () => {
+    const selection = window.getSelection();
+    if (!selection || !contentRef.current) return;
+    
+    // Only process if selection is in our content area
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      if (contentRef.current.contains(range.commonAncestorContainer)) {
+        // This is an approximation - for more accurate tracking we'd need
+        // to map the DOM position to the content string position precisely
+        const selectionText = content.substring(0, range.startOffset);
+        setCaretPosition(selectionText.length);
+      }
+    }
+  };
+  
+  // Handle clicks to set caret position
+  const handleContentClick = (e: React.MouseEvent) => {
+    if (readOnly) return;
+    
+    // Prevent click handling if clicking on a task highlight
+    if ((e.target as HTMLElement).getAttribute('data-task-index')) {
+      return;
+    }
+    
+    updateCaretPosition();
+    
+    // When clicking in the editor and not on a task highlight, focus the editor
+    if (contentRef.current) {
+      contentRef.current.focus();
+    }
+  };
+  
+  // Setup paste handling
+  useEffect(() => {
+    if (readOnly || !contentRef.current) return;
+    
+    const handlePaste = (e: ClipboardEvent) => {
+      e.preventDefault();
+      const clipboardData = e.clipboardData;
+      if (!clipboardData) return;
+      
+      const pastedText = clipboardData.getData('text');
+      const newContent = insertAtCaret(pastedText);
+      setContent(newContent);
+      if (onSave) onSave(newContent);
+    };
+    
+    const contentElement = contentRef.current;
+    contentElement.addEventListener('paste', handlePaste);
+    
+    return () => {
+      contentElement.removeEventListener('paste', handlePaste);
+    };
+  }, [readOnly, content, caretPosition, onSave]);
   
   const handleCloseAIPane = () => {
     clearSuggestion();
@@ -494,6 +683,50 @@ export function OpordCanvas({
     );
   };
   
+  // We need to maintain our own content state rather than relying on contentEditable
+  // This ensures highlights work correctly when the content is edited
+  const handleContentInput = (e: React.FormEvent<HTMLDivElement>) => {
+    if (readOnly) return;
+    
+    // Get the content from the contentEditable div
+    const newContent = e.currentTarget.textContent || '';
+    
+    // Update our state if it's different
+    if (newContent !== content) {
+      setContent(newContent);
+      
+      // Don't save or analyze on every keystroke
+      // The onSave callback will be called with final content on blur
+    }
+  };
+  
+  // When leaving the editor, save the final content
+  const handleEditorBlur = () => {
+    if (readOnly || !onSave) return;
+    
+    // Save content but don't auto-analyze on blur
+    onSave(content);
+    
+    // Update caret position
+    updateCaretPosition();
+  };
+  
+  // Handle mouseup for proper text selection with both double-click and drag selection
+  useEffect(() => {
+    if (readOnly || !contentRef.current) return;
+    
+    const handleMouseUp = () => {
+      handleSelectionChange();
+    };
+    
+    const contentElement = contentRef.current;
+    contentElement.addEventListener('mouseup', handleMouseUp);
+    
+    return () => {
+      contentElement.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [readOnly, content, handleSelectionChange]);
+  
   return (
     <div className={cn("relative border border-zinc-800 bg-zinc-950 rounded-md", className)}>
       {activeTooltip && (
@@ -524,26 +757,53 @@ export function OpordCanvas({
           ref={contentRef}
           className={cn(
             "p-4 font-mono text-sm text-white leading-relaxed whitespace-pre-wrap flex-1 min-h-[300px]",
-            readOnly ? "" : "focus:outline-none"
+            readOnly ? "" : "focus:outline-none focus:ring-1 focus:ring-emerald-700/50 selection:bg-zinc-700 selection:text-emerald-300"
           )}
           tabIndex={0}
+          contentEditable={!readOnly}
+          suppressContentEditableWarning={true}
+          onKeyDown={handleKeyDown}
+          onKeyPress={handleKeyPress}
+          onClick={handleContentClick}
+          onInput={handleContentInput}
+          onBlur={handleEditorBlur}
+          spellCheck={false}
         >
-          {renderHiddenTextarea()}
-          
-          {/* Display content with or without highlights */}
           {highlightedText || content}
-          
-          {/* Loading indicator */}
-          {isAnalyzing && (
-            <div className="fixed bottom-4 right-4 bg-emerald-900/50 text-emerald-400 font-mono text-xs px-3 py-1 rounded-md animate-pulse">
-              Analyzing...
-            </div>
-          )}
         </div>
         
         {/* AI Enhancement Pane */}
         {renderAIPane()}
       </div>
+      
+      {/* Debugging info (optional) */}
+      {!readOnly && selection && (
+        <div className="absolute bottom-14 right-2 text-xs font-mono bg-zinc-900 border border-zinc-800 p-1 rounded text-zinc-400">
+          Selection: {selection.start}-{selection.end}
+        </div>
+      )}
+      
+      {/* Manual analyze button - Make it more prominent */}
+      {!readOnly && (
+        <div className="absolute bottom-2 right-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={runAnalysis}
+            disabled={isAnalyzing}
+            className="text-xs bg-zinc-900 border-zinc-700 hover:bg-zinc-800 hover:text-emerald-400"
+          >
+            {isAnalyzing ? 'Analyzing...' : 'Analyze for Tactical Tasks'}
+          </Button>
+        </div>
+      )}
+      
+      {/* Loading indicator */}
+      {isAnalyzing && (
+        <div className="fixed bottom-4 right-4 bg-emerald-900/50 text-emerald-400 font-mono text-xs px-3 py-1 rounded-md animate-pulse">
+          Analyzing...
+        </div>
+      )}
     </div>
   );
 } 
