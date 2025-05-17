@@ -24,7 +24,6 @@ export default function Register() {
     e.preventDefault();
     setValidationError('');
     
-    // Validation
     if (!email || !password || !confirmPassword) {
       setValidationError('All fields are required');
       return;

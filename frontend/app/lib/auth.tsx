@@ -31,6 +31,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
   error: string | null;
@@ -92,6 +93,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
   
+  const register = async (email: string, password: string) => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // Register the user
+      await authApi.register(email, password);
+      
+      // After successful registration, log them in
+      await login(email, password);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Registration failed');
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   const logout = () => {
     removeLocalStorageItem('token');
     setUser(null);
@@ -100,7 +119,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider value={{ 
       user, 
-      login, 
+      login,
+      register,
       logout, 
       isAuthenticated: !!user,
       error,

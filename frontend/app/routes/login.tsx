@@ -23,7 +23,6 @@ export default function Login() {
     e.preventDefault();
     setValidationError('');
     
-    // Simple validation
     if (!email || !password) {
       setValidationError('Please enter both email and password');
       return;
