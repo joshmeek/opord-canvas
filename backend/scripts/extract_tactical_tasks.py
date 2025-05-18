@@ -17,11 +17,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Add the project's backend directory (which contains 'app', 'db', etc.) to sys.path
-# Assumes this script is in backend/scripts/
-# __file__ is backend/scripts/extract_tactical_tasks.py
-# .parent is backend/scripts/
-# .parent.parent is backend/
 backend_root_path = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(backend_root_path)) # Insert at the beginning to ensure it's checked first
 
