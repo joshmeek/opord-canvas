@@ -412,6 +412,86 @@ export function OpordCanvas({
     clearSuggestion();
   };
   
+  // Helper function to restore caret position after content update
+  const restoreCaretPosition = (position: number) => {
+    if (!contentRef.current) return;
+    
+    // Wait for React to update the DOM
+    setTimeout(() => {
+      // Create a range and set the position
+      const range = document.createRange();
+      const sel = window.getSelection();
+      if (!sel) return;
+      
+      try {
+        // Find the text node where we need to place the caret
+        const container = contentRef.current;
+        if (!container) return;
+        
+        const nodePosition = findNodeAndOffsetAtPosition(container, position);
+        if (!nodePosition) return;
+        
+        range.setStart(nodePosition.node, nodePosition.offset);
+        range.collapse(true);
+        
+        sel.removeAllRanges();
+        sel.addRange(range);
+        
+        // Update our internal tracking
+        setCaretPosition(position);
+      } catch (e) {
+        console.error("Error restoring caret position:", e);
+      }
+    }, 0);
+  };
+  
+  // Find the node and offset at a specific position in the content
+  const findNodeAndOffsetAtPosition = (
+    container: Node, 
+    targetPosition: number
+  ): { node: Node, offset: number } | null => {
+    // Handle empty content
+    if (targetPosition === 0 && container.childNodes.length === 0) {
+      return { node: container, offset: 0 };
+    }
+    
+    let currentPosition = 0;
+    
+    // Create a tree walker to walk through all text nodes
+    const walker = document.createTreeWalker(
+      container,
+      NodeFilter.SHOW_TEXT,
+      null
+    );
+    
+    let node = walker.nextNode();
+    while (node) {
+      const nodeLength = node.textContent?.length || 0;
+      
+      // Check if the target position is within this text node
+      if (currentPosition + nodeLength >= targetPosition) {
+        return {
+          node,
+          offset: targetPosition - currentPosition
+        };
+      }
+      
+      currentPosition += nodeLength;
+      node = walker.nextNode();
+    }
+    
+    // If we got here, we couldn't find the position
+    // Return the last position of the last text node as fallback
+    if (container.lastChild && container.lastChild.textContent) {
+      return {
+        node: container.lastChild,
+        offset: container.lastChild.textContent.length
+      };
+    }
+    
+    return null;
+  };
+  
   // Handle key presses for text editing
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (readOnly) return;
@@ -422,6 +502,11 @@ export function OpordCanvas({
       const newContent = insertAtCaret('\t');
       setContent(newContent);
       if (onSave) onSave(newContent);
+      
+      // For Tab we use the updated caret position from insertAtCaret
+      if (caretPosition !== null) {
+        restoreCaretPosition(caretPosition);
+      }
       return;
     }
     
@@ -448,10 +533,18 @@ export function OpordCanvas({
     
     e.preventDefault(); // Prevent default for other keypresses
     
+    // Track the current position before we update content
+    const positionBeforeUpdate = caretPosition;
+    
     if (e.key === 'Enter') {
       const newContent = insertAtCaret('\n');
       setContent(newContent);
       if (onSave) onSave(newContent);
+      
+      // Restore cursor position after the content is updated
+      if (caretPosition !== null) {
+        restoreCaretPosition(caretPosition);
+      }
     } else if (e.key === 'Backspace') {
       const selection = window.getSelection();
       
@@ -459,15 +552,22 @@ export function OpordCanvas({
       if (selection && selection.toString()) {
         const range = selection.getRangeAt(0);
         if (contentRef.current?.contains(range.commonAncestorContainer)) {
+          // Get the text nodes before the selection start
+          const textNodesBeforeSelection = getTextNodesUpTo(contentRef.current, range.startContainer);
+          const offsetBefore = textNodesBeforeSelection.reduce((total, node) => {
+            return total + (node.textContent || '').length;
+          }, 0);
+          
+          const start = offsetBefore + range.startOffset;
           const selectedText = selection.toString();
-          const start = content.indexOf(selectedText);
-          if (start >= 0) {
-            const end = start + selectedText.length;
-            const newContent = content.substring(0, start) + content.substring(end);
-            setContent(newContent);
-            if (onSave) onSave(newContent);
-            setCaretPosition(start);
-          }
+          const end = start + selectedText.length;
+          
+          const newContent = content.substring(0, start) + content.substring(end);
+          setContent(newContent);
+          if (onSave) onSave(newContent);
+          
+          // Restore cursor to the start of the deleted selection
+          restoreCaretPosition(start);
         }
       } 
       // Otherwise delete the character before the caret
@@ -477,12 +577,19 @@ export function OpordCanvas({
           content.substring(caretPosition);
         setContent(newContent);
         if (onSave) onSave(newContent);
-        setCaretPosition(caretPosition - 1);
+        
+        // Move cursor back one character
+        restoreCaretPosition(caretPosition - 1);
       }
     } else if (e.key.length === 1) { // Regular character input
       const newContent = insertAtCaret(e.key);
       setContent(newContent);
       if (onSave) onSave(newContent);
+      
+      // Restore cursor position after the new character
+      if (caretPosition !== null) {
+        restoreCaretPosition(caretPosition);
+      }
     }
   };
   
@@ -493,19 +600,24 @@ export function OpordCanvas({
     if (selection && selection.toString()) {
       const range = selection.getRangeAt(0);
       if (contentRef.current?.contains(range.commonAncestorContainer)) {
+        // Get the text nodes before the selection start
+        const textNodesBeforeSelection = getTextNodesUpTo(contentRef.current, range.startContainer);
+        const offsetBefore = textNodesBeforeSelection.reduce((total, node) => {
+          return total + (node.textContent || '').length;
+        }, 0);
+        
+        const start = offsetBefore + range.startOffset;
         const selectedText = selection.toString();
-        const start = content.indexOf(selectedText);
-        if (start >= 0) {
-          const end = start + selectedText.length;
-          const newContent = 
-            content.substring(0, start) + 
-            textToInsert + 
-            content.substring(end);
-          
-          // Set caret position after inserted text
-          setCaretPosition(start + textToInsert.length);
-          return newContent;
-        }
+        const end = start + selectedText.length;
+        
+        const newContent = 
+          content.substring(0, start) + 
+          textToInsert + 
+          content.substring(end);
+        
+        // Set caret position after inserted text
+        setCaretPosition(start + textToInsert.length);
+        return newContent;
       }
     }
     
@@ -536,10 +648,14 @@ export function OpordCanvas({
     if (selection.rangeCount > 0) {
       const range = selection.getRangeAt(0);
       if (contentRef.current.contains(range.commonAncestorContainer)) {
-        // This is an approximation - for more accurate tracking we'd need
-        // to map the DOM position to the content string position precisely
-        const selectionText = content.substring(0, range.startOffset);
-        setCaretPosition(selectionText.length);
+        // Get the text nodes before the selection point
+        const textNodesBeforeSelection = getTextNodesUpTo(contentRef.current, range.startContainer);
+        const offsetBefore = textNodesBeforeSelection.reduce((total, node) => {
+          return total + (node.textContent || '').length;
+        }, 0);
+        
+        // Set caret position
+        setCaretPosition(offsetBefore + range.startOffset);
       }
     }
   };
@@ -688,6 +804,9 @@ export function OpordCanvas({
   const handleContentInput = (e: React.FormEvent<HTMLDivElement>) => {
     if (readOnly) return;
     
+    // Remember current caret position before update
+    const currentPos = caretPosition;
+    
     // Get the content from the contentEditable div
     const newContent = e.currentTarget.textContent || '';
     
@@ -697,6 +816,11 @@ export function OpordCanvas({
       
       // Don't save or analyze on every keystroke
       // The onSave callback will be called with final content on blur
+      
+      // Try to restore cursor position
+      if (currentPos !== null) {
+        restoreCaretPosition(currentPos);
+      }
     }
   };
   
