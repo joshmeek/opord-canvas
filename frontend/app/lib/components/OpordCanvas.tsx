@@ -492,6 +492,67 @@ export function OpordCanvas({
     return null;
   };
   
+  // Helper function to insert text at current caret position
+  const insertAtCaret = (textToInsert: string): string => {
+    // If there's a selection, replace it
+    const selection = window.getSelection();
+    if (selection && selection.toString()) {
+      const range = selection.getRangeAt(0);
+      if (contentRef.current?.contains(range.commonAncestorContainer)) {
+        // Get the text nodes before the selection start
+        const textNodesBeforeSelection = getTextNodesUpTo(contentRef.current, range.startContainer);
+        const offsetBefore = textNodesBeforeSelection.reduce((total, node) => {
+          return total + (node.textContent || '').length;
+        }, 0);
+        
+        const start = offsetBefore + range.startOffset;
+        const selectedText = selection.toString();
+        const end = start + selectedText.length;
+        
+        const newContent = 
+          content.substring(0, start) + 
+          textToInsert + 
+          content.substring(end);
+        
+        // Set caret position after inserted text
+        const newPosition = start + textToInsert.length;
+        setCaretPosition(newPosition);
+        
+        // Schedule a restore of the caret position
+        setTimeout(() => restoreCaretPosition(newPosition), 0);
+        
+        return newContent;
+      }
+    }
+    
+    // Otherwise insert at current caret position
+    if (caretPosition !== null) {
+      const newContent = 
+        content.substring(0, caretPosition) + 
+        textToInsert + 
+        content.substring(caretPosition);
+      
+      // Update caret position and schedule restore
+      const newPosition = caretPosition + textToInsert.length;
+      setCaretPosition(newPosition);
+      
+      // Schedule a restore of the caret position
+      setTimeout(() => restoreCaretPosition(newPosition), 0);
+      
+      return newContent;
+    }
+    
+    // Fallback: append to end if no caret position
+    const newContent = content + textToInsert;
+    const newPosition = newContent.length;
+    setCaretPosition(newPosition);
+    
+    // Schedule a restore of the caret position
+    setTimeout(() => restoreCaretPosition(newPosition), 0);
+    
+    return newContent;
+  };
+  
   // Handle key presses for text editing
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (readOnly) return;
@@ -502,11 +563,6 @@ export function OpordCanvas({
       const newContent = insertAtCaret('\t');
       setContent(newContent);
       if (onSave) onSave(newContent);
-      
-      // For Tab we use the updated caret position from insertAtCaret
-      if (caretPosition !== null) {
-        restoreCaretPosition(caretPosition);
-      }
       return;
     }
     
@@ -533,18 +589,10 @@ export function OpordCanvas({
     
     e.preventDefault(); // Prevent default for other keypresses
     
-    // Track the current position before we update content
-    const positionBeforeUpdate = caretPosition;
-    
     if (e.key === 'Enter') {
       const newContent = insertAtCaret('\n');
       setContent(newContent);
       if (onSave) onSave(newContent);
-      
-      // Restore cursor position after the content is updated
-      if (caretPosition !== null) {
-        restoreCaretPosition(caretPosition);
-      }
     } else if (e.key === 'Backspace') {
       const selection = window.getSelection();
       
@@ -567,7 +615,9 @@ export function OpordCanvas({
           if (onSave) onSave(newContent);
           
           // Restore cursor to the start of the deleted selection
-          restoreCaretPosition(start);
+          const newPosition = start;
+          setCaretPosition(newPosition);
+          restoreCaretPosition(newPosition);
         }
       } 
       // Otherwise delete the character before the caret
@@ -579,64 +629,15 @@ export function OpordCanvas({
         if (onSave) onSave(newContent);
         
         // Move cursor back one character
-        restoreCaretPosition(caretPosition - 1);
+        const newPosition = caretPosition - 1;
+        setCaretPosition(newPosition);
+        restoreCaretPosition(newPosition);
       }
     } else if (e.key.length === 1) { // Regular character input
       const newContent = insertAtCaret(e.key);
       setContent(newContent);
       if (onSave) onSave(newContent);
-      
-      // Restore cursor position after the new character
-      if (caretPosition !== null) {
-        restoreCaretPosition(caretPosition);
-      }
     }
-  };
-  
-  // Helper function to insert text at current caret position
-  const insertAtCaret = (textToInsert: string): string => {
-    // If there's a selection, replace it
-    const selection = window.getSelection();
-    if (selection && selection.toString()) {
-      const range = selection.getRangeAt(0);
-      if (contentRef.current?.contains(range.commonAncestorContainer)) {
-        // Get the text nodes before the selection start
-        const textNodesBeforeSelection = getTextNodesUpTo(contentRef.current, range.startContainer);
-        const offsetBefore = textNodesBeforeSelection.reduce((total, node) => {
-          return total + (node.textContent || '').length;
-        }, 0);
-        
-        const start = offsetBefore + range.startOffset;
-        const selectedText = selection.toString();
-        const end = start + selectedText.length;
-        
-        const newContent = 
-          content.substring(0, start) + 
-          textToInsert + 
-          content.substring(end);
-        
-        // Set caret position after inserted text
-        setCaretPosition(start + textToInsert.length);
-        return newContent;
-      }
-    }
-    
-    // Otherwise insert at current caret position
-    if (caretPosition !== null) {
-      const newContent = 
-        content.substring(0, caretPosition) + 
-        textToInsert + 
-        content.substring(caretPosition);
-      
-      // Update caret position
-      setCaretPosition(caretPosition + textToInsert.length);
-      return newContent;
-    }
-    
-    // Fallback: append to end if no caret position
-    const newContent = content + textToInsert;
-    setCaretPosition(newContent.length);
-    return newContent;
   };
   
   // Track caret position in the content
