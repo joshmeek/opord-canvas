@@ -28,6 +28,13 @@ interface User {
   email: string;
 }
 
+// Add JWT token type
+interface JWTToken {
+  sub: string;
+  email: string;
+  exp: number;
+}
+
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
@@ -43,23 +50,40 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Start with loading true
   
-  // Check for stored token on mount
+  // Check for stored token on mount and token changes
   useEffect(() => {
-    const token = getLocalStorageItem('token');
-    if (token) {
-      try {
-        const decoded = jwtDecode<{sub: string; email: string}>(token);
-        setUser({
-          id: decoded.sub,
-          email: decoded.email
-        });
-      } catch (error) {
-        // Invalid token
-        removeLocalStorageItem('token');
+    const initializeAuth = async () => {
+      const token = getLocalStorageItem('token');
+      if (token) {
+        try {
+          const decoded = jwtDecode<JWTToken>(token);
+          // Verify token hasn't expired
+          const currentTime = Date.now() / 1000;
+          if (decoded.exp > currentTime) {
+            setUser({
+              id: decoded.sub,
+              email: decoded.email
+            });
+          } else {
+            // Token expired, remove it
+            removeLocalStorageItem('token');
+            setUser(null);
+          }
+        } catch (error) {
+          // Invalid token
+          console.error('Token validation error:', error);
+          removeLocalStorageItem('token');
+          setUser(null);
+        }
+      } else {
+        setUser(null);
       }
-    }
+      setIsLoading(false);
+    };
+
+    initializeAuth();
   }, []);
   
   const login = async (email: string, password: string) => {
@@ -72,18 +96,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       setLocalStorageItem('token', access_token);
       
-      // For JWT format like xxx.yyy.zzz
       try {
-        const decoded = jwtDecode<{sub: string; email: string}>(access_token);
+        const decoded = jwtDecode<JWTToken>(access_token);
         setUser({
           id: decoded.sub,
           email: decoded.email
         });
       } catch (e) {
         console.error('Token decode error:', e);
-        // Even if decoding fails, we may still be authenticated
-        // Let's still consider user logged in but with limited info
-        setUser({ id: 'unknown', email });
+        setError('Invalid authentication token received');
+        removeLocalStorageItem('token');
+        throw new Error('Authentication failed');
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Authentication failed');

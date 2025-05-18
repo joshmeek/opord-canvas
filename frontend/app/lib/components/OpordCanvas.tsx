@@ -8,6 +8,9 @@ import { tacticalTaskApi } from '../api';
 import { Button } from '../components';
 import { cn } from '../utils';
 
+/**
+ * Props for the OpordCanvas component
+ */
 interface OpordCanvasProps {
   initialContent?: string;
   onSave?: (content: string) => void;
@@ -15,7 +18,9 @@ interface OpordCanvasProps {
   readOnly?: boolean;
 }
 
-// Interface matching the API response for analysis results
+/**
+ * Response format for tactical task analysis from the API
+ */
 interface APIAnalysisResult {
   details: {
     id: number;
@@ -31,6 +36,16 @@ interface APIAnalysisResult {
   task_name: string;
 }
 
+/**
+ * OpordCanvas is a rich text editor component specialized for military Operations Orders (OPORDs).
+ * It provides:
+ * - Real-time tactical task highlighting
+ * - AI-powered text enhancement suggestions
+ * - Custom text selection handling
+ * - Automatic content saving
+ * 
+ * @param props OpordCanvasProps
+ */
 export function OpordCanvas({ 
   initialContent = '', 
   onSave,
@@ -903,30 +918,8 @@ export function OpordCanvas({
       
       {/* Debugging info (optional) */}
       {!readOnly && selection && (
-        <div className="absolute bottom-14 right-2 text-xs font-mono bg-zinc-900 border border-zinc-800 p-1 rounded text-zinc-400">
+        <div className="absolute bottom-2 right-2 text-xs font-mono bg-zinc-900 border border-zinc-800 p-1 rounded text-zinc-400">
           Selection: {selection.start}-{selection.end}
-        </div>
-      )}
-      
-      {/* Manual analyze button - Make it more prominent */}
-      {!readOnly && (
-        <div className="absolute bottom-2 right-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={runAnalysis}
-            disabled={isAnalyzing}
-            className="text-xs bg-zinc-900 border-zinc-700 hover:bg-zinc-800 hover:text-emerald-400"
-          >
-            {isAnalyzing ? 'Analyzing...' : 'Analyze for Tactical Tasks'}
-          </Button>
-        </div>
-      )}
-      
-      {/* Loading indicator */}
-      {isAnalyzing && (
-        <div className="fixed bottom-4 right-4 bg-emerald-900/50 text-emerald-400 font-mono text-xs px-3 py-1 rounded-md animate-pulse">
-          Analyzing...
         </div>
       )}
     </div>

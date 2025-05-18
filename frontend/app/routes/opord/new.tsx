@@ -6,6 +6,9 @@ import { useOpord } from '../../lib/opord-context';
 import { Navbar, MainLayout, Logo, Button, Card, CardHeader, CardTitle, CardContent, CardFooter, Input } from '../../lib/components';
 import { OpordCanvas } from '../../lib/components/OpordCanvas';
 
+/**
+ * Metadata for the New OPORD page
+ */
 export function meta() {
   return [
     { title: "New OPORD - OPORD Canvas" },
@@ -13,6 +16,10 @@ export function meta() {
   ];
 }
 
+/**
+ * Route loader that checks for authentication
+ * Redirects to login if no token is found
+ */
 export async function loader({ request }: Route.LoaderArgs) {
   // Check if we're in a browser environment before accessing localStorage
   if (typeof window !== 'undefined' && window.localStorage) {
@@ -24,6 +31,14 @@ export async function loader({ request }: Route.LoaderArgs) {
   return null;
 }
 
+/**
+ * NewOPORD component provides the interface for creating new Operations Orders.
+ * Features:
+ * - Title and content input
+ * - Rich text editing via OpordCanvas
+ * - Automatic tactical task analysis
+ * - Error handling and validation
+ */
 export default function NewOPORD() {
   const navigate = useNavigate();
   const { user } = useAuth();

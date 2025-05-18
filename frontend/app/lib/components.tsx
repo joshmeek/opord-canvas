@@ -189,8 +189,10 @@ export function MainLayout({
 }) {
   return (
     <div className="min-h-screen bg-zinc-950 text-white bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05)_0%,transparent_40%)]">
-      <div className={cn("pt-16 container mx-auto px-4", className)}>
-        {children}
+      <div className="pt-16">
+        <div className={cn("container mx-auto px-6", className)}>
+          {children}
+        </div>
       </div>
     </div>
   );

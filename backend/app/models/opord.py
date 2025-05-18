@@ -6,6 +6,19 @@ from sqlalchemy.sql import func
 from db.database import Base
 
 class OPORD(Base):
+    """
+    Operations Order (OPORD) model representing military operation plans.
+    
+    Attributes:
+        id: Primary key
+        title: Title of the OPORD
+        content: Full text content of the OPORD
+        user_id: Foreign key to the user who created the OPORD
+        created_at: Timestamp of OPORD creation
+        updated_at: Timestamp of last OPORD update
+        analysis_results: JSON field storing tactical task analysis results
+        user: Relationship to the OPORD's creator
+    """
     __tablename__ = "opords"
 
     id = Column(Integer, primary_key=True, index=True)

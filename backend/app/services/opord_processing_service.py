@@ -2,7 +2,7 @@ import logging
 from sqlalchemy.orm import Session
 
 from app.services.tactical_analysis_service import identify_and_retrieve_tactical_tasks
-from app.crud.opord import get_opord # To fetch the OPORD for update
+from app.crud.opord import get_opord, update_opord
 
 logger = logging.getLogger(__name__)
 
@@ -11,8 +11,21 @@ async def run_tactical_analysis_and_store_results(
     opord_id: int
 ):
     """
-    Retrieves OPORD content, performs tactical analysis, and stores the results in the DB.
-    Intended to be run as a background task.
+    Performs tactical task analysis on an OPORD's content and stores the results.
+    
+    This function is designed to be run as a background task. It:
+    1. Retrieves the OPORD from the database
+    2. Checks for valid content
+    3. Performs tactical analysis using NLP
+    4. Stores the analysis results back in the OPORD
+    
+    Args:
+        db: Database session
+        opord_id: ID of the OPORD to analyze
+    
+    Note:
+        If the OPORD has no content, an empty analysis result will be stored.
+        Any errors during analysis are logged but won't stop the application.
     """
     logger.info(f"Starting background tactical analysis for OPORD ID: {opord_id}")
     db_opord = get_opord(db=db, opord_id=opord_id)
@@ -23,7 +36,7 @@ async def run_tactical_analysis_and_store_results(
 
     if not db_opord.content:
         logger.info(f"OPORD ID: {opord_id} has no content. Skipping analysis.")
-        db_opord.analysis_results = [] # Store empty list if no content
+        db_opord.analysis_results = []
         try:
             db.commit()
             logger.info(f"Stored empty analysis results for OPORD ID: {opord_id} due to no content.")
@@ -42,10 +55,15 @@ async def run_tactical_analysis_and_store_results(
         db_opord.analysis_results = analysis_results
         db.commit()
         logger.info(f"Successfully performed analysis and stored results for OPORD ID: {opord_id}")
-
     except Exception as e:
         db.rollback()
         logger.error(f"Error during background tactical analysis for OPORD ID {opord_id}: {e}", exc_info=True)
-        # Optionally, set analysis_results to an error state or leave as is
-        # db_opord.analysis_results = {"error": str(e)} 
-        # db.commit() # If you want to store the error state 
+        # Store error state in analysis_results
+        db_opord.analysis_results = {
+            "error": "Analysis failed",
+            "details": str(e)
+        }
+        try:
+            db.commit()
+        except Exception as commit_error:
+            logger.error(f"Failed to store error state for OPORD ID {opord_id}: {commit_error}", exc_info=True)
