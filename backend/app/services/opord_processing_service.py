@@ -58,11 +58,17 @@ async def run_tactical_analysis_and_store_results(
     except Exception as e:
         db.rollback()
         logger.error(f"Error during background tactical analysis for OPORD ID {opord_id}: {e}", exc_info=True)
-        # Store error state in analysis_results
-        db_opord.analysis_results = {
+        # Store error state in analysis_results as a list to maintain schema compatibility
+        db_opord.analysis_results = [{
             "error": "Analysis failed",
-            "details": str(e)
-        }
+            "details": str(e),
+            "task": "ERROR",
+            "position": {"start": 0, "end": 0},
+            "definition": str(e),
+            "page_number": "N/A",
+            "image_path": None,
+            "id": 0
+        }]
         try:
             db.commit()
         except Exception as commit_error:

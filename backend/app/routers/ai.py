@@ -28,5 +28,5 @@ async def enhance_text_endpoint(
     except Exception as e:
         # Log the exception details for server-side review
         # logger.error(f"Error during text enhancement endpoint: {e}", exc_info=True)
-        # In a production environment, you might want more sophisticated error logging
+        # In a production environment, we want more sophisticated error logging
         raise HTTPException(status_code=500, detail=f"An error occurred during text enhancement: {str(e)}") 

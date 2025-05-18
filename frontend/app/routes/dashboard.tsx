@@ -130,81 +130,16 @@ export default function Dashboard() {
     }
   };
 
-  const renderEmptyState = () => {
-    if (showWelcome) {
-      return (
-        <Card className="border-emerald-500/30 bg-zinc-900/50 shadow-lg shadow-emerald-500/5">
-          <CardContent className="py-8">
-            <div className="text-center mb-6">
-              <h2 className="text-emerald-500 text-xl font-bold mb-2">Welcome to OPORD Canvas</h2>
-              <p className="text-zinc-400">Create your first Operation Order to get started</p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div className="border border-zinc-800 rounded-md p-4 bg-zinc-950/50">
-                <h3 className="font-bold text-white mb-2 flex items-center">
-                  <span className="inline-block w-6 h-6 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mr-2">1</span>
-                  Quick Create
-                </h3>
-                <p className="text-zinc-500 text-sm mb-4">
-                  Create a basic OPORD quickly and start editing right away.
-                </p>
-                <Button 
-                  variant="outline" 
-                  className="w-full border-emerald-500/30 hover:bg-emerald-500/10"
-                  onClick={() => {
-                    setShowQuickCreate(true);
-                    setShowWelcome(false);
-                  }}
-                >
-                  Quick Create
-                </Button>
-              </div>
-              
-              <div className="border border-zinc-800 rounded-md p-4 bg-zinc-950/50">
-                <h3 className="font-bold text-white mb-2 flex items-center">
-                  <span className="inline-block w-6 h-6 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mr-2">2</span>
-                  Advanced Create
-                </h3>
-                <p className="text-zinc-500 text-sm mb-4">
-                  Use the full editor to create a detailed OPORD with all components.
-                </p>
-                <Button 
-                  className="w-full"
-                  onClick={handleCreateOpord}
-                >
-                  Full Editor
-                </Button>
-              </div>
-            </div>
-            
-            <div className="text-xs text-center text-zinc-600">
-              OPORDs are automatically analyzed to identify tactical tasks and other military elements.
-            </div>
-          </CardContent>
-        </Card>
-      );
-    }
-    
-    return (
-      <Card className="border-dashed bg-transparent">
-        <CardContent className="py-12 text-center">
-          <p className="text-zinc-500 mb-4">No OPORDs found. Create your first operation order.</p>
-          <div className="flex gap-2 justify-center">
-            <Button 
-              variant="outline"
-              onClick={() => setShowQuickCreate(true)}
-            >
-              Quick Create
-            </Button>
-            <Button onClick={handleCreateOpord}>
-              New OPORD
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  };
+  const renderEmptyState = () => (
+    <Card className="border-dashed bg-transparent">
+      <CardContent className="py-12 text-center">
+        <p className="text-zinc-500 mb-4">Create your first operation order.</p>
+        <Button onClick={handleCreateOpord}>
+          Create OPORD
+        </Button>
+      </CardContent>
+    </Card>
+  );
   
   const renderQuickCreate = () => {
     if (!showQuickCreate) return null;

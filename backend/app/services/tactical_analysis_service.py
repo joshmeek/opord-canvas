@@ -51,19 +51,22 @@ These tasks are typically verbs or short verb phrases describing a specific mili
 
 For each identified potential tactical task, provide:
 1. The exact task name as you identify it (e.g., "SEIZE", "OCCUPY", "BYPASS").
-2. The starting character index of the task mention in the input text.
-3. The ending character index of the task mention in the input text.
+2. The starting character index of the task mention in the input text (a number).
+3. The ending character index of the task mention in the input text (a number).
+
+IMPORTANT: Return a valid JSON array. Replace TASK_NAME with the actual task name found, and START_INDEX/END_INDEX with actual numbers.
+Do not return the template literally. If no tasks are found, return an empty array: []
 
 Input Text:
 {text}
 
-Please provide your response in JSON format:
+Expected JSON format (replace with actual values):
 [
-  {
-    "task_name": "TASK_NAME",
-    "start_index": START_INDEX,
-    "end_index": END_INDEX
-  },
+  {{
+    "task_name": "SEIZE",
+    "start_index": 45,
+    "end_index": 50
+  }},
   ...
 ]"""
 
@@ -79,9 +82,15 @@ Please provide your response in JSON format:
         if cleaned_response_text.endswith("```"):
             cleaned_response_text = cleaned_response_text[:-3]
         
+        cleaned_response_text = cleaned_response_text.strip()
         logger.debug(f"Gemini NER response (cleaned): {cleaned_response_text[:500]}...")
         
-        recognized_entities = json.loads(cleaned_response_text)
+        try:
+            recognized_entities = json.loads(cleaned_response_text)
+        except json.JSONDecodeError as json_err:
+            logger.error(f"Failed to parse Gemini response as JSON: {json_err}. Response: {cleaned_response_text}")
+            return []
+            
         if not isinstance(recognized_entities, list):
             logger.warning(f"Gemini NER did not return a list. Response: {cleaned_response_text}")
             return []

@@ -37,14 +37,5 @@ async def analyze_text_for_tactical_tasks(
         )
         return identified_tasks
     except Exception as e:
-        # Log the exception details for server-side review
-        # logger.error(f"Error during tactical task analysis: {e}", exc_info=True)
-        # In a production environment, you might want more sophisticated error logging
+        # In a production environment, we want more sophisticated error logging
         raise HTTPException(status_code=500, detail=f"An error occurred during text analysis: {str(e)}")
-
-# TODO: Add a Pydantic response model for better OpenAPI documentation and validation
-# For now, using List[Dict[str, Any]] for flexibility during development.
-
-# Note: The current_user dependency is commented out for now for easier testing via curl.
-# Uncomment it and the dependency in APIRouter to secure the endpoint.
-# Re-enabled authentication for this endpoint. 
